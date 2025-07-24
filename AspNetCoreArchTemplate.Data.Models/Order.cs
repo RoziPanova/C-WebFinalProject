@@ -21,8 +21,10 @@
         [Comment("Customer phone number")]
         public string PhoneNumber { get; set; } = null!;
 
-        [Comment("Date the order was made on")]
+        [Comment("Date the order is expected by")]
         public DateTime OrderDate { get; set; }
+
+        //TODO: Implement isCanceled and isConfirmed
 
         // Navigation
         public virtual ICollection<OrderItem> OrderItems { get; set; }

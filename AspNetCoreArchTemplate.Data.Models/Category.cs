@@ -13,7 +13,7 @@
         public string Name { get; set; } = null!;
 
         [Comment("Category description")]
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
 
         [Comment("Category SoftDelete")]
         public bool IsDeleted { get; set; }
