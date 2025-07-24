@@ -14,5 +14,8 @@
 
         [Comment("CustomOrder details")]
         public string Details { get; set; } = null!;
+
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
+        = new HashSet<OrderItem>();
     }
 }
