@@ -22,13 +22,16 @@
         public string ImageUrl { get; set; } = null!;
 
         [Comment("Arrangements event")]
-        public string EventType { get; set; } = null!;
+        public string? EventType { get; set; }
+
+        [Comment("Arrangements SoftDelete")]
+        public bool IsDeleted { get; set; }
 
         [Comment("Arrangements category")]
         public Guid CategoryId { get; set; }
 
         // Navigation
-        public virtual Category? Category { get; set; }
+        public virtual Category Category { get; set; } = null!;
         public virtual ICollection<OrderItem> OrderItems { get; set; }
                 = new HashSet<OrderItem>();
     }

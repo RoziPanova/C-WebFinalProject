@@ -14,11 +14,14 @@
 
         // Optional FK for Bouquet
         [Comment("Ordered bouquets identifier")]
-        public int? BouquetId { get; set; }
+        public Guid? BouquetId { get; set; }
 
         // Optional FK for Arrangement
         [Comment("Ordered arrangement identifier")]
-        public int? ArrangementId { get; set; }
+        public Guid? ArrangementId { get; set; }
+
+        [Comment("CustomOrder arrangement identifier")]
+        public Guid? CustomOrderId { get; set; }
 
         [Comment("Ordered bouquets and arrangement quantity")]
         public int Quantity { get; set; }
@@ -27,5 +30,6 @@
         public virtual Order? Order { get; set; }
         public virtual Bouquet? Bouquet { get; set; }
         public virtual Arrangement? Arrangement { get; set; }
+        public virtual CustomOrder? CustomOrder { get; set; }
     }
 }

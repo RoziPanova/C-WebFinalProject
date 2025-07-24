@@ -15,8 +15,14 @@
         [Comment("Category description")]
         public string Description { get; set; } = null!;
 
+        [Comment("Category SoftDelete")]
+        public bool IsDeleted { get; set; }
+
         // Navigation property
         public virtual ICollection<Bouquet> Bouquets { get; set; }
                 = new HashSet<Bouquet>();
+
+        public virtual ICollection<Arrangement> Arrangements { get; set; }
+                = new HashSet<Arrangement>();
     }
 }

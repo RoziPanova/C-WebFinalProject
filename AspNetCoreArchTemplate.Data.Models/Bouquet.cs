@@ -14,13 +14,16 @@
         public string Name { get; set; } = null!;
 
         [Comment("Bouquet description")]
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
 
         [Comment("Bouquet price")]
         public decimal Price { get; set; }
 
         [Comment("Bouquet image")]
         public string ImageUrl { get; set; } = null!;
+
+        [Comment("Bouquet SoftDelete")]
+        public bool IsDeleted { get; set; }
 
         [Comment("Bouquet category")]
         public Guid? CategoryId { get; set; }
