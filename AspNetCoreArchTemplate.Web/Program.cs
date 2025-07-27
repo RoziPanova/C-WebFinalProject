@@ -1,21 +1,21 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using AspNetCoreArchTemplate.Data;
 namespace AspNetCoreArchTemplate.Web
 {
-    using Data;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using AspNetCoreArchTemplate.Data;
+
+    using Infrastructure.Extensions;
+    using AspNetCoreArchTemplate.Services.Core.Interfaces;
+    using AspNetCoreArchTemplate.Data.Repository.Interfaces;
 
     public class Program
     {
         public static void Main(string[] args)
         {
             WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
-            
+
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            
+
             builder.Services
                 .AddDbContext<ApplicationDbContext>(options =>
                 {
@@ -28,10 +28,15 @@ namespace AspNetCoreArchTemplate.Web
                     options.SignIn.RequireConfirmedAccount = true;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddRepositories(typeof(IBouquetRepository).Assembly);
+            builder.Services.AddUserDefinedServices(typeof(IBouquetService).Assembly);
+
             builder.Services.AddControllersWithViews();
 
+
             WebApplication? app = builder.Build();
-            
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
