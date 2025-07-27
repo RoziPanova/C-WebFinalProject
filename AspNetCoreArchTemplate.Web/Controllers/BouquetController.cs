@@ -1,16 +1,27 @@
 ﻿namespace AspNetCoreArchTemplate.Web.Controllers
 {
+    using AspNetCoreArchTemplate.Services.Core.Interfaces;
+    using AspNetCoreArchTemplate.Web.ViewModels.Bouquet;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class BouquetController : BaseController
     {
-        public BouquetController() { }
+        private readonly IBouquetService bouquetService;
 
-        [AllowAnonymous]
-        public IActionResult Index()
+        public BouquetController(IBouquetService bouquetService)
         {
-            return View();
+            this.bouquetService = bouquetService;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<BouquetIndexViewModel> allBouquets = await this.bouquetService
+                .GetAllBouquetsAsync();
+
+            return View(allBouquets);
         }
     }
 }

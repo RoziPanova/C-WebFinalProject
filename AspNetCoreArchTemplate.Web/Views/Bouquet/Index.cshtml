@@ -1,7 +1,25 @@
-﻿@{
+﻿@using AspNetCoreArchTemplate.Web.ViewModels.Bouquet
+@model IEnumerable<BouquetIndexViewModel>
+@{
     ViewData["Title"] = "Bouquets Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">WIP</h1>
+<h2 class="text-center my-4">Our Bouquets</h2>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        @foreach (BouquetIndexViewModel bouquet in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-1">
+                    <a asp-controller="Bouquet" asp-action="Details" asp-route-id="@bouquet.Id">
+                        <img style=" min-width: 386px !important;max-height: 386px !important;" src="@bouquet.ImageUrl" class="card-img-top" alt="@bouquet.Name" />
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@bouquet.Name</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

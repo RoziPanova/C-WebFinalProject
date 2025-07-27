@@ -59,3 +59,9 @@ a {
     a:hover {
         color: #6b8c72;
     }
+
+img.card-img-top {
+    min-width: 386px !important;
+    max-height: 386px !important;
+    padding: 10px !important;
+}
