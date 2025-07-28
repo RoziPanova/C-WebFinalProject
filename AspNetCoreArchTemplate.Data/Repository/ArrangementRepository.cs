@@ -2,14 +2,12 @@
 {
     using AspNetCoreArchTemplate.Data.Models;
     using AspNetCoreArchTemplate.Data.Repository.Interfaces;
-
-    public class BouquetRepository :
-        BaseRepository<Bouquet, Guid>, IBouquetRepository
+    public class ArrangementRepository
+        : BaseRepository<Arrangement, Guid>, IArrangementRepository
     {
-        public BouquetRepository(ApplicationDbContext dbContext)
+        public ArrangementRepository(ApplicationDbContext dbContext)
             : base(dbContext)
         {
-
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace CinemaApp.Data.Repository
+﻿namespace AspNetCoreArchTemplate.Data.Repository
 {
     using System.Linq.Expressions;
     using System.Reflection;
