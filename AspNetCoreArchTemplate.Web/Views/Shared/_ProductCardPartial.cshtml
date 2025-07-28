@@ -1,0 +1,12 @@
+﻿@model dynamic
+
+<div class="col">
+    <div class="card h-100 shadow-sm border-1">
+        <a asp-action="Details" asp-route-id="@Model.Id">
+            <img style=" aspect-ratio:4/4" src="@Model.ImageUrl" class="card-img-top  " alt="@Model.Name" loading="lazy" />
+        </a>
+        <div class="card-body text-center">
+            <h5 class="card-title">@Model.Name</h5>
+        </div>
+    </div>
+</div>
