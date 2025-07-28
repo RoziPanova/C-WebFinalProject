@@ -6,20 +6,20 @@
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using static AspNetCoreArchTemplate.GCommon.ApplicationConstants;
 
-    public class BouquetService : IBouquetService
+    public class ArrangementService : IArrangementService
     {
-        private readonly IBouquetRepository bouquetRepository;
-
-        public BouquetService(IBouquetRepository bouquetRepository)
+        private readonly IArrangementRepository arrangementRepository;
+        public ArrangementService(IArrangementRepository arrangementRepository)
         {
-            this.bouquetRepository = bouquetRepository;
+            this.arrangementRepository = arrangementRepository;
         }
+
         public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync()
         {
-
-            IEnumerable<ProductIndexViewModel> allProducts = await this.bouquetRepository
+            IEnumerable<ProductIndexViewModel> allProducts = await this.arrangementRepository
                 .GetAllAttached()
                 .AsNoTracking()
                 .Select(b => new ProductIndexViewModel()
@@ -46,7 +46,7 @@
             bool isIdValidGuid = Guid.TryParse(id, out Guid productId);
             if (isIdValidGuid)
             {
-                productsDetails = await this.bouquetRepository
+                productsDetails = await this.arrangementRepository
                     .GetAllAttached()
                     .AsNoTracking()
                     .Where(b => b.Id == productId)
@@ -65,4 +65,3 @@
         }
     }
 }
-

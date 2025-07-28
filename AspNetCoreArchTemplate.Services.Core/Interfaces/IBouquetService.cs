@@ -1,9 +1,10 @@
 ﻿namespace AspNetCoreArchTemplate.Services.Core.Interfaces
 {
-    using AspNetCoreArchTemplate.Web.ViewModels.Bouquet;
+    using AspNetCoreArchTemplate.Web.ViewModels.Products;
 
     public interface IBouquetService
     {
-        Task<IEnumerable<BouquetIndexViewModel>> GetAllBouquetsAsync();
+        Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync();
+        Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(string? id);
     }
 }
