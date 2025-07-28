@@ -60,8 +60,29 @@ a {
         color: #6b8c72;
     }
 
-img.card-img-top {
+/*img.card-img-top {
     min-width: 386px !important;
     max-height: 386px !important;
     padding: 10px !important;
+}*/
+
+body {
+    background-color: #f9f7f6;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
 }
+
+h2 {
+    color: #6c3c7c;
+}
+
+.btn-outline-success {
+    border-color: #6c3c7c;
+    color: #6c3c7c;
+}
+
+    .btn-outline-success:hover {
+        background-color: #6c3c7c;
+        color: white;
+    }
+
