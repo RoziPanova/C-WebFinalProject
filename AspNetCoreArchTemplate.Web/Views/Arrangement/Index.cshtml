@@ -1,7 +1,16 @@
-﻿@{
+﻿@using AspNetCoreArchTemplate.Web.ViewModels.Products
+@model IEnumerable<ProductIndexViewModel>
+@{
     ViewData["Title"] = "Arrangements Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">WIP</h1>
+<h2 class="text-center my-4">Our Arrangements</h2>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        @foreach (ProductIndexViewModel arrangement in Model)
+        {
+            <partial name="_ProductCardPartial" model="arrangement"></partial>
+        }
+    </div>
 </div>

@@ -1,0 +1,12 @@
+﻿@using AspNetCoreArchTemplate.Web.ViewModels.Products
+@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+@model ProductDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Name ?? "Bouquet Details";
+}
+<div class="container mt-5">
+    <div class="row">
+        <partial name="_ProductDetailsPartial" model="Model"></partial>
+    </div>
+</div>
