@@ -7,8 +7,11 @@
         [Comment("Orders identifier")]
         public Guid Id { get; set; }
 
+        [Comment("Ordered Items identifier")]
+        public Guid OrderItemsId { get; set; }
+
         [Comment("Customer identifier")]
-        public string CustomerId { get; set; } = null!;
+        public string UserId { get; set; } = null!;
 
         public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
