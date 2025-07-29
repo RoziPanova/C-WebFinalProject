@@ -56,6 +56,7 @@
                         Name = b.Name,
                         Price = b.Price,
                         Description = b.Description,
+                        EventType = b.EventType,
                         ImageUrl = b.ImageUrl ?? $"{NoImageUrl}",
                     })
                     .SingleOrDefaultAsync();
