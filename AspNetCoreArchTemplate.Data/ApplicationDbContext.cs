@@ -5,13 +5,13 @@
     using Microsoft.EntityFrameworkCore;
     using System.Reflection;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-
         }
+
 
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
         public virtual DbSet<Arrangement> Arrangements { get; set; } = null!;

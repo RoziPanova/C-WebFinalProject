@@ -12,7 +12,7 @@ namespace AspNetCoreArchTemplate.Data.Configuration
             entity
                 .HasMany(au => au.Orders)
                 .WithOne(o => o.ApplicationUser)
-                .HasForeignKey(o => o.CustomerId)
+                .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

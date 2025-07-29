@@ -14,7 +14,7 @@
                 .HasKey(o => o.Id);
 
             entity
-                .Property(o => o.CustomerId)
+                .Property(o => o.UserId)
                 .IsRequired(true);
 
             entity
@@ -35,7 +35,7 @@
             entity
                 .HasOne(o => o.ApplicationUser)
                 .WithMany(au => au.Orders)
-                .HasForeignKey(o => o.CustomerId)
+                .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             entity
