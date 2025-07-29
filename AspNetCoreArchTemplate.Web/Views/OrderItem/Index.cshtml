@@ -1,0 +1,59 @@
+﻿@using AspNetCoreArchTemplate.Web.ViewModels.OrderItems
+@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+
+@model IEnumerable<OrderItemsIndexViewModel>
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h2>Your Cart</h2>
+
+@if (Model.Any() != true)
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th class="text-end">Price</th>
+                <th class="text-end">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="@item.ImageUrl" width="100" /></td>
+                    <td>@item.Name</td>
+                    <td>@item.Type</td>
+                    <td>@item.Quantity</td>
+                    <td class="text-end">@item.Price</td>
+                    <td class="text-end">
+                        <form method="post" asp-page-handler="Remove">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-end fw-bold">Total:</td>
+                <td class="text-end fw-bold">Total:</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <form method="post" asp-action="Checkout">
+        <button type="submit" class="btn btn-success">Proceed to Checkout</button>
+    </form>
+}
