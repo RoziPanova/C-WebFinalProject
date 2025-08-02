@@ -7,6 +7,9 @@
 }
 <div class="container mt-5">
     <div class="row">
-        <partial name="_ProductDetailsPartial" model="Model"></partial>
+        @if (Model.ProductType == "Bouquet")
+        {
+            <partial name="_ProductDetailsPartial" model="Model"></partial>
+        }
     </div>
 </div>

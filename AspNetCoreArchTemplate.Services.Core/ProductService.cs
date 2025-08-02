@@ -27,6 +27,7 @@
                     Id = p.Id.ToString(),
                     Name = p.Name,
                     ImageUrl = p.ImageUrl,
+                    ProductType = p.ProductType,
                 })
                 .ToListAsync();
             foreach (ProductIndexViewModel product in allProducts)
@@ -49,15 +50,16 @@
                 productsDetails = await this.productRepository
                     .GetAllAttached()
                     .AsNoTracking()
-                    .Where(b => b.Id == productId)
-                    .Select(b => new ProductDetailsViewModel()
+                    .Where(p => p.Id == productId)
+                    .Select(p => new ProductDetailsViewModel()
                     {
-                        Id = b.Id.ToString(),
-                        Name = b.Name,
-                        Price = b.Price,
-                        Description = b.Description,
-                        EventType = b.EventType,
-                        ImageUrl = b.ImageUrl ?? $"{NoImageUrl}",
+                        Id = p.Id.ToString(),
+                        Name = p.Name,
+                        Price = p.Price,
+                        Description = p.Description,
+                        EventType = p.EventType,
+                        ImageUrl = p.ImageUrl ?? $"{NoImageUrl}",
+                        ProductType = p.ProductType,
                     })
                     .SingleOrDefaultAsync();
             }
