@@ -22,252 +22,57 @@ namespace AspNetCoreArchTemplate.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Arrangement", b =>
+            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Arrangements identifier");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Arrangements category");
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasComment("Arrangements description");
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EventType")
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Arrangements event");
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Arrangements image");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasComment("Arrangements SoftDelete");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("Arrangements name");
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,6)")
-                        .HasComment("Arrangements price");
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CategoryId");
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Arrangements", t =>
-                        {
-                            t.HasComment("Arrangements in the system");
-                        });
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a3c30e0e-adf3-4a5b-ba9e-d32162c5b2d5"),
-                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
-                            Description = "A luxurious arrangement with white roses, peonies, and hydrangeas for weddings.",
-                            EventType = "Wedding",
-                            ImageUrl = "https://www.theknot.com/tk-media/images/183bcf98-9b6d-11e4-843f-22000aa61a3e~rs_1458.h?quality=60",
-                            IsDeleted = false,
-                            Name = "Elegant Wedding Arrangement",
-                            Price = 120.00m
-                        },
-                        new
-                        {
-                            Id = new Guid("0a646a94-1c80-47b6-b1b4-0046a8c6b9b4"),
-                            CategoryId = new Guid("d791f856-10f5-43fc-a64c-a01ecdd50b4c"),
-                            Description = "Gental tulips and daisies to brighten any birthday celebration.",
-                            EventType = "Birthday",
-                            ImageUrl = "https://buket-express.ua/image/cache/catalog/b7fea839-fbbe-4ca5-b5ae-37511c1360a8-479x471.jpg",
-                            IsDeleted = false,
-                            Name = "Birthday Joy Arrangement",
-                            Price = 75.00m
-                        },
-                        new
-                        {
-                            Id = new Guid("dc54ef1a-4fde-4e88-b6af-a3384ab26a18"),
-                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
-                            Description = "Red roses, pink carnations, and baby’s breath for anniversaries.",
-                            EventType = "Anniversary",
-                            ImageUrl = "https://ovenfresh.in/wp-content/uploads/2023/02/Rose-Spray-Pink-Carnation-And-Baby-Breath_1-min.jpg",
-                            IsDeleted = false,
-                            Name = "Romantic Anniversary Arrangement",
-                            Price = 110.00m
-                        },
-                        new
-                        {
-                            Id = new Guid("5e1776d8-c706-4d6d-b033-3b8b24ad70b9"),
-                            CategoryId = new Guid("33494634-acb2-4a4f-b17f-84b7a509c615"),
-                            Description = "A joyful arrangement of cheerful gerberas, yellow roses, and vibrant daisies to express gratitude and positivity.",
-                            EventType = "Thank You",
-                            ImageUrl = "https://ovenfresh.in/wp-content/uploads/2023/02/Fresh-Vibes-Arrangement-Of-Yellow-Gerberas-Roses-Daisies-In-A-Vase_1-min.jpg",
-                            IsDeleted = false,
-                            Name = "Gratitude Bloom Arrangement",
-                            Price = 95.00m
-                        },
-                        new
-                        {
-                            Id = new Guid("46cf97cc-15e7-4278-b685-2de157dc060a"),
-                            CategoryId = new Guid("5801cc76-5a81-4277-be80-ad5bf3722b6f"),
-                            Description = "Bright sunflowers, blue hydrangeas, and yellow roses to celebrate graduation.",
-                            EventType = "Graduation",
-                            ImageUrl = "https://asset.bloomnation.com/c_pad,d_vendor:global:catalog:product:image.png,f_auto,fl_preserve_transparency,q_auto/v1747105267/vendor/1687/catalog/product/2/0/20200715022009_file_5f0f1099589f4_5f0f11c6d9ebd.jpg",
-                            IsDeleted = false,
-                            Name = "Graduation Party Arrangement",
-                            Price = 85.00m
-                        });
-                });
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Bouquet", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Bouquets identifier");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Bouquet category");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasComment("Bouquet description");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Bouquet image");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasComment("Bouquet SoftDelete");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasComment("Bouquet name");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,6)")
-                        .HasComment("Bouquet price");
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Bouquets", t =>
-                        {
-                            t.HasComment("Bouquets in the system");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c9dad354-a243-4ef0-97dc-1cec4244d94d"),
-                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
-                            Description = "A bouquet of 12 premium red roses wrapped elegantly.",
-                            ImageUrl = "https://thetamarvalleyroseshop.com.au/cdn/shop/files/DozenRedRoseswithfoliage.png?v=1685674162",
-                            IsDeleted = false,
-                            Name = "Classic Red Roses",
-                            Price = 49.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("6caac6b5-b928-4c47-b4fc-57835728a9fd"),
-                            CategoryId = new Guid("9bf53d40-b2c3-4b3a-bf0c-af7ed12b9ee8"),
-                            Description = "Elegant bouquet of white lilies for sympathy or purity occasions.",
-                            ImageUrl = "https://i.pinimg.com/736x/32/e5/b9/32e5b915136533a4acb23cf77771d785.jpg",
-                            IsDeleted = false,
-                            Name = "White Lily Elegance",
-                            Price = 39.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("72a35d14-63ab-4d31-9293-59857e511155"),
-                            CategoryId = new Guid("d791f856-10f5-43fc-a64c-a01ecdd50b4c"),
-                            Description = "A vibrant mix of seasonal flowers perfect for any celebration.",
-                            ImageUrl = "https://flowerfrenzie.com/cdn/shop/files/photo_6086967573792015161_y.jpg?v=1737440620&width=960",
-                            IsDeleted = false,
-                            Name = "Spring Mix",
-                            Price = 59.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("41bca3cf-44c8-4798-bd5e-05e87bcbc08a"),
-                            CategoryId = new Guid("5801cc76-5a81-4277-be80-ad5bf3722b6f"),
-                            Description = "Bright sunflowers to bring joy and positivity.",
-                            ImageUrl = "https://freshknots.in/wp-content/uploads/2022/12/2-540x540.jpg",
-                            IsDeleted = false,
-                            Name = "Sunflower Happiness",
-                            Price = 29.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("512ef72f-0621-41af-9105-359eb34dec7e"),
-                            CategoryId = new Guid("8cfd344e-76ca-41bc-910d-c98f15e147ef"),
-                            Description = "Soft pink peonies arranged delicately for romantic gestures.",
-                            ImageUrl = "https://www.flowerartistanbul.com/wp-content/uploads/2023/12/24_9b9f1661-a7a0-4606-af18-2f05051c0c87_3000x.webp",
-                            IsDeleted = false,
-                            Name = "Pink Peony Romance",
-                            Price = 69.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("260be0a8-c3f6-4ce2-b116-090534da3c5f"),
-                            CategoryId = new Guid("33494634-acb2-4a4f-b17f-84b7a509c615"),
-                            Description = "Bright orange gerberas to lift spirits and bring smiles.",
-                            ImageUrl = "https://cdn.bloomsflora.com/uploads/product/bloomsflora/14449_55_14449.webp",
-                            IsDeleted = false,
-                            Name = "Orange Gerbera Cheer",
-                            Price = 34.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("fdb6dd43-298a-42ea-ad83-eb207a34f1ab"),
-                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
-                            Description = "A bouquet of mixed color roses for versatile occasions.",
-                            ImageUrl = "https://images.myglobalflowers.com/d8754d79-eba0-4e39-9615-4d49677be500/medium",
-                            IsDeleted = false,
-                            Name = "Mixed Roses Delight",
-                            Price = 54.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("d8d49905-661d-437b-bd66-1aef16235fde"),
-                            CategoryId = new Guid("9bf53d40-b2c3-4b3a-bf0c-af7ed12b9ee8"),
-                            Description = "Elegant purple orchids for a touch of class and luxury.",
-                            ImageUrl = "https://b2895521.smushcdn.com/2895521/wp-content/uploads/2025/04/purple-orchid-bouquet.jpg?lossy=0&strip=1&webp=1",
-                            IsDeleted = false,
-                            Name = "Purple Orchid Elegance",
-                            Price = 79.99m
-                        },
-                        new
-                        {
-                            Id = new Guid("ff4a21fe-e95f-45f4-9576-29498b738caa"),
-                            CategoryId = new Guid("d791f856-10f5-43fc-a64c-a01ecdd50b4c"),
-                            Description = "Fresh yellow tulips to brighten anyone’s day.",
-                            ImageUrl = "https://cdn.uaeflowers.com/uploads/product/uaeflowers/DSC03058C_13_9620.webp",
-                            IsDeleted = false,
-                            Name = "Yellow Tulip Sunshine",
-                            Price = 44.99m
-                        });
+                    b.ToTable("ApplicationUsers");
                 });
 
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Category", b =>
@@ -375,17 +180,12 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Ordered items identifier");
 
-                    b.Property<Guid?>("ArrangementId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Ordered arrangement identifier");
-
-                    b.Property<Guid?>("BouquetId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Ordered bouquets identifier");
-
                     b.Property<Guid?>("CustomOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("CustomOrder arrangement identifier");
+                        .HasComment("Ordered Product identifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
@@ -393,11 +193,9 @@ namespace AspNetCoreArchTemplate.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArrangementId");
-
-                    b.HasIndex("BouquetId");
-
                     b.HasIndex("CustomOrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems", t =>
                         {
@@ -405,23 +203,220 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.UserOrder", b =>
+            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Product", b =>
                 {
-                    b.Property<Guid>("OrderItemId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasComment("Order item identifier");
+                        .HasComment("Product identifier");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasComment("User identifier");
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Product category");
 
-                    b.HasKey("OrderItemId", "UserId");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasComment("Product description");
 
-                    b.HasIndex("UserId");
+                    b.Property<string>("EventType")
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Product event type");
 
-                    b.ToTable("Orders", t =>
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Product image");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasComment("Product SoftDelete");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Product name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,6)")
+                        .HasComment("Product price");
+
+                    b.Property<string>("ProductType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Product type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products", t =>
                         {
-                            t.HasComment("Links users and order items");
+                            t.HasComment("Products in the system");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c9dad354-a243-4ef0-97dc-1cec4244d94d"),
+                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
+                            Description = "A bouquet of 12 premium red roses wrapped elegantly.",
+                            ImageUrl = "https://thetamarvalleyroseshop.com.au/cdn/shop/files/DozenRedRoseswithfoliage.png?v=1685674162",
+                            IsDeleted = false,
+                            Name = "Classic Red Roses",
+                            Price = 49.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("6caac6b5-b928-4c47-b4fc-57835728a9fd"),
+                            CategoryId = new Guid("9bf53d40-b2c3-4b3a-bf0c-af7ed12b9ee8"),
+                            Description = "Elegant bouquet of white lilies for sympathy or purity occasions.",
+                            ImageUrl = "https://i.pinimg.com/736x/32/e5/b9/32e5b915136533a4acb23cf77771d785.jpg",
+                            IsDeleted = false,
+                            Name = "White Lily Elegance",
+                            Price = 39.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("72a35d14-63ab-4d31-9293-59857e511155"),
+                            CategoryId = new Guid("d791f856-10f5-43fc-a64c-a01ecdd50b4c"),
+                            Description = "A vibrant mix of seasonal flowers perfect for any celebration.",
+                            ImageUrl = "https://flowerfrenzie.com/cdn/shop/files/photo_6086967573792015161_y.jpg?v=1737440620&width=960",
+                            IsDeleted = false,
+                            Name = "Spring Mix",
+                            Price = 59.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("41bca3cf-44c8-4798-bd5e-05e87bcbc08a"),
+                            CategoryId = new Guid("5801cc76-5a81-4277-be80-ad5bf3722b6f"),
+                            Description = "Bright sunflowers to bring joy and positivity.",
+                            ImageUrl = "https://freshknots.in/wp-content/uploads/2022/12/2-540x540.jpg",
+                            IsDeleted = false,
+                            Name = "Sunflower Happiness",
+                            Price = 29.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("512ef72f-0621-41af-9105-359eb34dec7e"),
+                            CategoryId = new Guid("8cfd344e-76ca-41bc-910d-c98f15e147ef"),
+                            Description = "Soft pink peonies arranged delicately for romantic gestures.",
+                            ImageUrl = "https://www.flowerartistanbul.com/wp-content/uploads/2023/12/24_9b9f1661-a7a0-4606-af18-2f05051c0c87_3000x.webp",
+                            IsDeleted = false,
+                            Name = "Pink Peony Romance",
+                            Price = 69.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("260be0a8-c3f6-4ce2-b116-090534da3c5f"),
+                            CategoryId = new Guid("33494634-acb2-4a4f-b17f-84b7a509c615"),
+                            Description = "Bright orange gerberas to lift spirits and bring smiles.",
+                            ImageUrl = "https://cdn.bloomsflora.com/uploads/product/bloomsflora/14449_55_14449.webp",
+                            IsDeleted = false,
+                            Name = "Orange Gerbera Cheer",
+                            Price = 34.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("fdb6dd43-298a-42ea-ad83-eb207a34f1ab"),
+                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
+                            Description = "A bouquet of mixed color roses for versatile occasions.",
+                            ImageUrl = "https://images.myglobalflowers.com/d8754d79-eba0-4e39-9615-4d49677be500/medium",
+                            IsDeleted = false,
+                            Name = "Mixed Roses Delight",
+                            Price = 54.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("d8d49905-661d-437b-bd66-1aef16235fde"),
+                            CategoryId = new Guid("9bf53d40-b2c3-4b3a-bf0c-af7ed12b9ee8"),
+                            Description = "Elegant purple orchids for a touch of class and luxury.",
+                            ImageUrl = "https://b2895521.smushcdn.com/2895521/wp-content/uploads/2025/04/purple-orchid-bouquet.jpg?lossy=0&strip=1&webp=1",
+                            IsDeleted = false,
+                            Name = "Purple Orchid Elegance",
+                            Price = 79.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("ff4a21fe-e95f-45f4-9576-29498b738caa"),
+                            CategoryId = new Guid("d791f856-10f5-43fc-a64c-a01ecdd50b4c"),
+                            Description = "Fresh yellow tulips to brighten anyone’s day.",
+                            ImageUrl = "https://cdn.uaeflowers.com/uploads/product/uaeflowers/DSC03058C_13_9620.webp",
+                            IsDeleted = false,
+                            Name = "Yellow Tulip Sunshine",
+                            Price = 44.99m,
+                            ProductType = "Bouquet"
+                        },
+                        new
+                        {
+                            Id = new Guid("a3c30e0e-adf3-4a5b-ba9e-d32162c5b2d5"),
+                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
+                            Description = "A luxurious arrangement with white roses, peonies, and hydrangeas for weddings.",
+                            EventType = "Wedding",
+                            ImageUrl = "https://www.theknot.com/tk-media/images/183bcf98-9b6d-11e4-843f-22000aa61a3e~rs_1458.h?quality=60",
+                            IsDeleted = false,
+                            Name = "Elegant Wedding Arrangement",
+                            Price = 120.00m,
+                            ProductType = "Arrangement"
+                        },
+                        new
+                        {
+                            Id = new Guid("0a646a94-1c80-47b6-b1b4-0046a8c6b9b4"),
+                            CategoryId = new Guid("d791f856-10f5-43fc-a64c-a01ecdd50b4c"),
+                            Description = "Gental tulips and daisies to brighten any birthday celebration.",
+                            EventType = "Birthday",
+                            ImageUrl = "https://buket-express.ua/image/cache/catalog/b7fea839-fbbe-4ca5-b5ae-37511c1360a8-479x471.jpg",
+                            IsDeleted = false,
+                            Name = "Birthday Joy Arrangement",
+                            Price = 75.00m,
+                            ProductType = "Arrangement"
+                        },
+                        new
+                        {
+                            Id = new Guid("dc54ef1a-4fde-4e88-b6af-a3384ab26a18"),
+                            CategoryId = new Guid("bef74ba8-1607-4b5d-9808-a626b965daa4"),
+                            Description = "Red roses, pink carnations, and baby’s breath for anniversaries.",
+                            EventType = "Anniversary",
+                            ImageUrl = "https://ovenfresh.in/wp-content/uploads/2023/02/Rose-Spray-Pink-Carnation-And-Baby-Breath_1-min.jpg",
+                            IsDeleted = false,
+                            Name = "Romantic Anniversary Arrangement",
+                            Price = 110.00m,
+                            ProductType = "Arrangement"
+                        },
+                        new
+                        {
+                            Id = new Guid("5e1776d8-c706-4d6d-b033-3b8b24ad70b9"),
+                            CategoryId = new Guid("33494634-acb2-4a4f-b17f-84b7a509c615"),
+                            Description = "A joyful arrangement of cheerful gerberas, yellow roses, and vibrant daisies to express gratitude and positivity.",
+                            EventType = "Thank You",
+                            ImageUrl = "https://ovenfresh.in/wp-content/uploads/2023/02/Fresh-Vibes-Arrangement-Of-Yellow-Gerberas-Roses-Daisies-In-A-Vase_1-min.jpg",
+                            IsDeleted = false,
+                            Name = "Gratitude Bloom Arrangement",
+                            Price = 95.00m,
+                            ProductType = "Arrangement"
+                        },
+                        new
+                        {
+                            Id = new Guid("46cf97cc-15e7-4278-b685-2de157dc060a"),
+                            CategoryId = new Guid("5801cc76-5a81-4277-be80-ad5bf3722b6f"),
+                            Description = "Bright sunflowers, blue hydrangeas, and yellow roses to celebrate graduation.",
+                            EventType = "Graduation",
+                            ImageUrl = "https://asset.bloomnation.com/c_pad,d_vendor:global:catalog:product:image.png,f_auto,fl_preserve_transparency,q_auto/v1747105267/vendor/1687/catalog/product/2/0/20200715022009_file_5f0f1099589f4_5f0f11c6d9ebd.jpg",
+                            IsDeleted = false,
+                            Name = "Graduation Party Product",
+                            Price = 85.00m,
+                            ProductType = "Arrangement"
                         });
                 });
 
@@ -489,11 +484,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -545,10 +535,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator().HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -636,75 +622,28 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Arrangement", b =>
-                {
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.Category", "Category")
-                        .WithMany("Arrangements")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Bouquet", b =>
-                {
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.Category", "Category")
-                        .WithMany("Bouquets")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.OrderItem", b =>
                 {
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.Arrangement", "Arrangement")
+                    b.HasOne("AspNetCoreArchTemplate.Data.Models.CustomOrder", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("ArrangementId")
+                        .HasForeignKey("CustomOrderId");
+
+                    b.HasOne("AspNetCoreArchTemplate.Data.Models.Product", "Product")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.Bouquet", "Bouquet")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("BouquetId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.CustomOrder", "CustomOrder")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("CustomOrderId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Arrangement");
-
-                    b.Navigation("Bouquet");
-
-                    b.Navigation("CustomOrder");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.UserOrder", b =>
+            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Product", b =>
                 {
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.OrderItem", "OrderItem")
-                        .WithMany("UserOrders")
-                        .HasForeignKey("OrderItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("AspNetCoreArchTemplate.Data.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.ApplicationUser", "User")
-                        .WithMany("UserOrders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrderItem");
-
-                    b.Navigation("User");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -758,21 +697,9 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Arrangement", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Bouquet", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Category", b =>
                 {
-                    b.Navigation("Arrangements");
-
-                    b.Navigation("Bouquets");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.CustomOrder", b =>
@@ -780,14 +707,9 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.OrderItem", b =>
+            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Product", b =>
                 {
-                    b.Navigation("UserOrders");
-                });
-
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("UserOrders");
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

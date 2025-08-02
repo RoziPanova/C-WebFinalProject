@@ -2,7 +2,7 @@
 {
     using AspNetCoreArchTemplate.Web.ViewModels.Products;
 
-    public interface IBouquetService
+    public interface IProductService
     {
         Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync();
         Task<ProductDetailsViewModel> GetProductDetailsByIdAsync(string? id);

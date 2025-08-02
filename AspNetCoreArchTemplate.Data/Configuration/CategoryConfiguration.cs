@@ -22,15 +22,9 @@
                 .IsRequired(false);
 
             entity
-                .HasMany(c => c.Bouquets)
+                .HasMany(c => c.Products)
                 .WithOne(b => b.Category)
                 .HasForeignKey(b => b.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            entity
-                .HasMany(c => c.Arrangements)
-                .WithOne(a => a.Category)
-                .HasForeignKey(a => a.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             entity

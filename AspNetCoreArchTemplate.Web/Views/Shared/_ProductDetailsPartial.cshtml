@@ -21,7 +21,7 @@
     <h4 class="text-primary mb-4">$@Model.Price.ToString(PriceFormat)</h4>
 
     <form asp-controller="OrderItem" asp-action="AddToCart" method="post">
-        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="id" value="@Model" />
 
         <button type="submit" class="btn btn-success">Add to Cart</button>
     </form>

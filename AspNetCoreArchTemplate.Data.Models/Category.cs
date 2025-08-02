@@ -19,10 +19,7 @@
         public bool IsDeleted { get; set; }
 
         // Navigation property
-        public virtual ICollection<Bouquet> Bouquets { get; set; }
-                = new HashSet<Bouquet>();
-
-        public virtual ICollection<Arrangement> Arrangements { get; set; }
-                = new HashSet<Arrangement>();
+        public virtual ICollection<Product> Products { get; set; }
+            = new HashSet<Product>();
     }
 }

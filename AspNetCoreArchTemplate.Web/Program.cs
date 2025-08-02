@@ -34,8 +34,8 @@ namespace AspNetCoreArchTemplate.Web
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddRepositories(typeof(IBouquetRepository).Assembly);
-            builder.Services.AddUserDefinedServices(typeof(IBouquetService).Assembly);
+            builder.Services.AddRepositories(typeof(IProductRepository).Assembly);
+            builder.Services.AddUserDefinedServices(typeof(IProductService).Assembly);
 
             builder.Services.AddControllersWithViews();
 

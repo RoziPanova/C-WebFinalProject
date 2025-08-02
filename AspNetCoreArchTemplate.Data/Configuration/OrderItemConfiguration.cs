@@ -16,22 +16,11 @@
                 .IsRequired(true);
 
             entity
-                .HasOne(oi => oi.Bouquet)
+                .HasOne(oi => oi.Product)
                 .WithMany(b => b.OrderItems)
-                .HasForeignKey(oi => oi.BouquetId)
+                .HasForeignKey(oi => oi.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity
-               .HasOne(oi => oi.Arrangement)
-               .WithMany(a => a.OrderItems)
-               .HasForeignKey(oi => oi.ArrangementId)
-               .OnDelete(DeleteBehavior.Restrict);
-            entity
-
-               .HasOne(oi => oi.CustomOrder)
-               .WithMany(co => co.OrderItems)
-               .HasForeignKey(oi => oi.CustomOrderId)
-               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

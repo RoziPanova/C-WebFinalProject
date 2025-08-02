@@ -2,10 +2,8 @@
 {
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<Guid>
     {
-        public virtual ICollection<UserOrder> UserOrders { get; set; }
-            = new HashSet<UserOrder>();
     }
 
 }

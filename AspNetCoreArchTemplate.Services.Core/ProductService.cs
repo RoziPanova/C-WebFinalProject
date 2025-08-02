@@ -8,25 +8,25 @@
     using System.Threading.Tasks;
     using static AspNetCoreArchTemplate.GCommon.ApplicationConstants;
 
-    public class BouquetService : IBouquetService
+    public class ProductService : IProductService
     {
-        private readonly IBouquetRepository bouquetRepository;
+        private readonly IProductRepository productRepository;
 
-        public BouquetService(IBouquetRepository bouquetRepository)
+        public ProductService(IProductRepository productRepository)
         {
-            this.bouquetRepository = bouquetRepository;
+            this.productRepository = productRepository;
         }
         public async Task<IEnumerable<ProductIndexViewModel>> GetAllProductsAsync()
         {
 
-            IEnumerable<ProductIndexViewModel> allProducts = await this.bouquetRepository
+            IEnumerable<ProductIndexViewModel> allProducts = await this.productRepository
                 .GetAllAttached()
                 .AsNoTracking()
-                .Select(b => new ProductIndexViewModel()
+                .Select(p => new ProductIndexViewModel()
                 {
-                    Id = b.Id.ToString(),
-                    Name = b.Name,
-                    ImageUrl = b.ImageUrl,
+                    Id = p.Id.ToString(),
+                    Name = p.Name,
+                    ImageUrl = p.ImageUrl,
                 })
                 .ToListAsync();
             foreach (ProductIndexViewModel product in allProducts)
@@ -46,7 +46,7 @@
             bool isIdValidGuid = Guid.TryParse(id, out Guid productId);
             if (isIdValidGuid)
             {
-                productsDetails = await this.bouquetRepository
+                productsDetails = await this.productRepository
                     .GetAllAttached()
                     .AsNoTracking()
                     .Where(b => b.Id == productId)
@@ -56,12 +56,13 @@
                         Name = b.Name,
                         Price = b.Price,
                         Description = b.Description,
+                        EventType = b.EventType,
                         ImageUrl = b.ImageUrl ?? $"{NoImageUrl}",
                     })
                     .SingleOrDefaultAsync();
             }
 
-            return productsDetails;
+            return productsDetails!;
         }
     }
 }

@@ -22,11 +22,11 @@
                 .IsRequired(true)
                 .HasMaxLength(CustomOrderDetailsMaxLenght);
 
-            entity
-                .HasMany(co => co.OrderItems)
-                .WithOne(oi => oi.CustomOrder)
-                .HasForeignKey(oi => oi.CustomOrderId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //entity
+            //    .HasMany(co => co.OrderItems)
+            //    .WithOne(oi => oi.CustomOrder)
+            //    .HasForeignKey(oi => oi.CustomOrderId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

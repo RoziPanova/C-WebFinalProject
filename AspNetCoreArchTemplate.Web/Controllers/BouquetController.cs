@@ -7,18 +7,18 @@
 
     public class BouquetController : BaseController
     {
-        private readonly IBouquetService bouquetService;
+        private readonly IProductService productService;
 
-        public BouquetController(IBouquetService bouquetService)
+        public BouquetController(IProductService productService)
         {
-            this.bouquetService = bouquetService;
+            this.productService = productService;
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ProductIndexViewModel> allBouquets = await this.bouquetService
+            IEnumerable<ProductIndexViewModel> allBouquets = await this.productService
                 .GetAllProductsAsync();
 
             return View(allBouquets);
@@ -29,7 +29,7 @@
         {
             try
             {
-                ProductDetailsViewModel bouquet = await this.bouquetService
+                ProductDetailsViewModel bouquet = await this.productService
                                 .GetProductDetailsByIdAsync(id);
                 if (bouquet == null)
                 {

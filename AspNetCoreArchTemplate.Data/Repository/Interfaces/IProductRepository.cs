@@ -2,8 +2,9 @@
 {
     using AspNetCoreArchTemplate.Data.Models;
 
-    public interface IOrderItemRepository :
-        IRepository<OrderItem, Guid>, IAsyncRepository<OrderItem, Guid>
+    public interface IProductRepository :
+        IRepository<Product, Guid>, IAsyncRepository<Product, Guid>
     {
+
     }
 }

@@ -4,28 +4,34 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Comment("Bouquets in the system")]
-    public class Bouquet
+    [Comment("Products in the system")]
+    public class Product
     {
-        [Comment("Bouquets identifier")]
+        [Comment("Product identifier")]
         public Guid Id { get; set; }
 
-        [Comment("Bouquet name")]
+        [Comment("Product name")]
         public string Name { get; set; } = null!;
 
-        [Comment("Bouquet description")]
+        [Comment("Product description")]
         public string? Description { get; set; }
 
-        [Comment("Bouquet price")]
+        [Comment("Product price")]
         public decimal Price { get; set; }
 
-        [Comment("Bouquet image")]
+        [Comment("Product image")]
         public string ImageUrl { get; set; } = null!;
 
-        [Comment("Bouquet SoftDelete")]
+        [Comment("Product type")]
+        public string ProductType { get; set; } = null!;
+
+        [Comment("Product event type")]
+        public string? EventType { get; set; }
+
+        [Comment("Product SoftDelete")]
         public bool IsDeleted { get; set; }
 
-        [Comment("Bouquet category")]
+        [Comment("Product category")]
         public Guid? CategoryId { get; set; }
 
         // Navigation properties
