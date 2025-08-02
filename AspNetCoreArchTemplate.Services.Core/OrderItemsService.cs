@@ -32,7 +32,6 @@
              {
                  Id = o.Id.ToString(),
                  Name = o.Bouquet.Name ?? o.Arrangement.Name ?? "Custom Order",
-                 Type = o.ItemType,
                  ImageUrl = o.Bouquet.ImageUrl ?? o.Arrangement.ImageUrl ?? $"{NoImageUrl}",
                  Quantity = o.Quantity,
                  Price = (o.Bouquet.Price.ToString() ?? o.Arrangement.Price.ToString()) ?? "Custom Order",
@@ -59,7 +58,6 @@
             {
                 orderItem = new OrderItem
                 {
-                    ItemType = "Bouquet",
                     BouquetId = bouquet.Id,
                     Quantity = 1
                 };
@@ -75,7 +73,6 @@
                 {
                     orderItem = new OrderItem
                     {
-                        ItemType = "Arrangement",
                         ArrangementId = arrangement.Id,
                         Quantity = 1
                     };
@@ -84,7 +81,7 @@
                 {
                     orderItem = new OrderItem
                     {
-                        ItemType = "CustomOrder",
+
                         CustomOrderId = guidId,
                         Quantity = 1
                     };
@@ -92,12 +89,6 @@
                 }
 
             }
-            if (orderItem != null)
-            {
-                orderItem.OrderId = Guid.NewGuid();
-            }
-            else
-                return;
 
             await orderItemsRepository.AddAsync(orderItem);
             await orderItemsRepository.SaveChangesAsync();

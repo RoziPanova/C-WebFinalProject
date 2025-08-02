@@ -18,7 +18,7 @@
         public virtual DbSet<Bouquet> Bouquets { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<CustomOrder> CustomOrders { get; set; } = null!;
-        public virtual DbSet<Order> Orders { get; set; } = null!;
+        public virtual DbSet<UserOrder> Orders { get; set; } = null!;
         public virtual DbSet<OrderItem> OrderItems { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)

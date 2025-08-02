@@ -16,12 +16,6 @@
                 .IsRequired(true);
 
             entity
-                .HasOne(oi => oi.Order)
-                .WithMany(o => o.OrderItems)
-                .HasForeignKey(oi => oi.OrderId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            entity
                 .HasOne(oi => oi.Bouquet)
                 .WithMany(b => b.OrderItems)
                 .HasForeignKey(oi => oi.BouquetId)

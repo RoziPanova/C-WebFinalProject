@@ -4,7 +4,8 @@
 
     public class ApplicationUser : IdentityUser
     {
-        public virtual ICollection<Order> Orders { get; set; }
-            = new HashSet<Order>();
+        public virtual ICollection<UserOrder> UserOrders { get; set; }
+            = new HashSet<UserOrder>();
     }
+
 }
