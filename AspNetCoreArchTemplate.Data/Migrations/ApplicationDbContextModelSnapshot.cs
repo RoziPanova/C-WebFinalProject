@@ -22,59 +22,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.ApplicationUser", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ApplicationUsers");
-                });
-
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -155,51 +102,36 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("CustomOrder identifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Customer address");
+
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)")
                         .HasComment("CustomOrder details");
 
-                    b.Property<DateTime>("RequestedDate")
-                        .HasColumnType("datetime2")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Customer phone number");
+
+                    b.Property<DateOnly>("RequestedDate")
+                        .HasColumnType("date")
                         .HasComment("Date CustomOrder is needed on");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Customer name");
 
                     b.HasKey("Id");
 
                     b.ToTable("CustomOrders", t =>
                         {
                             t.HasComment("CustomOrders in the system");
-                        });
-                });
-
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.OrderItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Ordered items identifier");
-
-                    b.Property<Guid?>("CustomOrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasComment("Ordered Product identifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasComment("Ordered bouquets and arrangement quantity");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomOrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems", t =>
-                        {
-                            t.HasComment("Ordered items in the system");
                         });
                 });
 
@@ -622,20 +554,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.OrderItem", b =>
-                {
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.CustomOrder", null)
-                        .WithMany("OrderItems")
-                        .HasForeignKey("CustomOrderId");
-
-                    b.HasOne("AspNetCoreArchTemplate.Data.Models.Product", "Product")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Product", b =>
                 {
                     b.HasOne("AspNetCoreArchTemplate.Data.Models.Category", "Category")
@@ -700,16 +618,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.CustomOrder", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Product", b =>
-                {
-                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

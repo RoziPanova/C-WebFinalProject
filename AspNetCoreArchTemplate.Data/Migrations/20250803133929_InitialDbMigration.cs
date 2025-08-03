@@ -14,31 +14,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ApplicationUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -97,8 +72,11 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "CustomOrder identifier"),
-                    RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date CustomOrder is needed on"),
-                    Details = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "CustomOrder details")
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Customer name"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Customer phone number"),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Customer address"),
+                    Details = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "CustomOrder details"),
+                    RequestedDate = table.Column<DateOnly>(type: "date", nullable: false, comment: "Date CustomOrder is needed on")
                 },
                 constraints: table =>
                 {
@@ -238,32 +216,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                 },
                 comment: "Products in the system");
 
-            migrationBuilder.CreateTable(
-                name: "OrderItems",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Ordered items identifier"),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true, comment: "Ordered Product identifier"),
-                    Quantity = table.Column<int>(type: "int", nullable: false, comment: "Ordered bouquets and arrangement quantity"),
-                    CustomOrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_CustomOrders_CustomOrderId",
-                        column: x => x.CustomOrderId,
-                        principalTable: "CustomOrders",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                },
-                comment: "Ordered items in the system");
-
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Description", "IsDeleted", "Name" },
@@ -338,16 +290,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_CustomOrderId",
-                table: "OrderItems",
-                column: "CustomOrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_ProductId",
-                table: "OrderItems",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -356,9 +298,6 @@ namespace AspNetCoreArchTemplate.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ApplicationUsers");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -375,19 +314,16 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "OrderItems");
+                name: "CustomOrders");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "CustomOrders");
-
-            migrationBuilder.DropTable(
-                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Categories");

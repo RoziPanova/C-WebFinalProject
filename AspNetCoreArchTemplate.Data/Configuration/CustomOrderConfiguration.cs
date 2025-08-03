@@ -12,7 +12,15 @@
         {
             entity
                 .HasKey(co => co.Id);
-
+            entity
+              .Property(co => co.UserName)
+              .IsRequired(true);
+            entity
+              .Property(co => co.PhoneNumber)
+              .IsRequired(true);
+            entity
+              .Property(co => co.Address)
+              .IsRequired(true);
             entity
                 .Property(co => co.RequestedDate)
                 .IsRequired(true);
@@ -21,13 +29,6 @@
                 .Property(co => co.Details)
                 .IsRequired(true)
                 .HasMaxLength(CustomOrderDetailsMaxLenght);
-
-            //entity
-            //    .HasMany(co => co.OrderItems)
-            //    .WithOne(oi => oi.CustomOrder)
-            //    .HasForeignKey(oi => oi.CustomOrderId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

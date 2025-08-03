@@ -39,11 +39,11 @@
                 .HasForeignKey(b => b.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity
-                .HasMany(b => b.OrderItems)
-                .WithOne(oi => oi.Product)
-                .HasForeignKey(oi => oi.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //entity
+            //    .HasMany(b => b.OrderItems)
+            //    .WithOne(oi => oi.Product)
+            //    .HasForeignKey(oi => oi.ProductId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             entity
                 .HasQueryFilter(b => b.IsDeleted == false);
