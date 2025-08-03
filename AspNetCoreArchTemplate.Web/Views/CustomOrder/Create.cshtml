@@ -1,0 +1,51 @@
+﻿@using System.Text.RegularExpressions
+@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+@model AspNetCoreArchTemplate.Web.ViewModels.CustomOrder.CustomOrderFormInputViewModel
+@{
+    ViewData["Title"] = "Create Custom Order";
+    bool requestDateExists = DateOnly
+        .TryParse(Model?.RequestedDate, out DateOnly date);
+    string requetDateInputVal = requestDateExists ?
+        date.ToString(AppDateFormat) : string.Empty;
+}
+
+<h1>Create Custom Order</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="UserName">Name</label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        @*TODO: Add a javascript plug in for international phone numbers*@
+        <label asp-for="PhoneNumber">Phone Number</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address">Address</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Details">Detailed Description</label>
+        <textarea asp-for="Details" class="form-control" rows="4" placeholder="Tells Us What You'd Like!'"></textarea>
+        <span asp-validation-for="Details" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RequestedDate">Requested On:</label>
+        <input asp-for="RequestedDate" class="form-control" type="date" value="@requetDateInputVal"/>
+        <span asp-validation-for="RequestedDate" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
