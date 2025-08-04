@@ -7,6 +7,7 @@ namespace AspNetCoreArchTemplate.Web
     using Infrastructure.Extensions;
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using AspNetCoreArchTemplate.Data.Repository.Interfaces;
+    using AspNetCoreArchTemplate.Data.Models;
 
     public class Program
     {
