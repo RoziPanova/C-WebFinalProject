@@ -42,7 +42,7 @@ namespace AspNetCoreArchTemplate.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.CartItem", b =>
@@ -66,7 +66,7 @@ namespace AspNetCoreArchTemplate.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("AspNetCoreArchTemplate.Data.Models.Category", b =>
@@ -92,7 +92,7 @@ namespace AspNetCoreArchTemplate.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", t =>
+                    b.ToTable("Categories", null, t =>
                         {
                             t.HasComment("Category in the system");
                         });
@@ -176,7 +176,7 @@ namespace AspNetCoreArchTemplate.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomOrders", t =>
+                    b.ToTable("CustomOrders", null, t =>
                         {
                             t.HasComment("CustomOrders in the system");
                         });
@@ -232,7 +232,7 @@ namespace AspNetCoreArchTemplate.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", t =>
+                    b.ToTable("Products", null, t =>
                         {
                             t.HasComment("Products in the system");
                         });
