@@ -19,8 +19,8 @@
 
             entity
                 .HasOne(c => c.User)
-                .WithOne(c => c.Cart)
-                .HasForeignKey<Cart>(c => c.UserId)
+                .WithMany(c => c.Carts)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             entity

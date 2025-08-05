@@ -4,6 +4,6 @@
 
     public class ApplicationUser : IdentityUser
     {
-        public virtual Cart? Cart { get; set; }
+        public virtual ICollection<Cart>? Carts { get; set; }
     }
 }

@@ -9,9 +9,9 @@
         public void Configure(EntityTypeBuilder<ApplicationUser> entity)
         {
             entity
-                .HasOne(u => u.Cart)
+                .HasMany(u => u.Carts)
                 .WithOne(c => c.User)
-                .HasForeignKey<Cart>(c => c.UserId)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
