@@ -26,17 +26,11 @@
                 {
                     Id = p.Id.ToString(),
                     Name = p.Name,
-                    ImageUrl = p.ImageUrl,
+                    ImageUrl = p.ImageUrl ?? $"{NoImageUrl}",
                     ProductType = p.ProductType,
                 })
                 .ToListAsync();
-            foreach (ProductIndexViewModel product in allProducts)
-            {
-                if (String.IsNullOrEmpty(product.ImageUrl))
-                {
-                    product.ImageUrl = $"{NoImageUrl}";
-                }
-            }
+
             return allProducts;
         }
 

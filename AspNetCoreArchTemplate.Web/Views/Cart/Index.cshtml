@@ -35,11 +35,23 @@ else
                         </td>
                         <td>@item.ProductName</td>
                         <td>@item.ProductType</td>
-                        <td>@item.Quantity</td>
+                        <td>
+                            <form asp-controller="Cart" asp-action="DecreaseQuantity" method="post" class="d-inline">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button class="btn btn-sm btn-outline-secondary">-</button>
+                            </form>
+
+                            <span class="mx-2">@item.Quantity</span>
+
+                            <form asp-controller="Cart" asp-action="IncreaseQuantity" method="post" class="d-inline">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button class="btn btn-sm btn-outline-secondary">+</button>
+                            </form>
+                        </td>
                         <td>@item.Price.ToString(PriceFormat)</td>
                         <td>@String.Format(PriceFormat, (item.Quantity * item.Price))</td>
                         <td>
-                            <form method="post" asp-page-handler="Remove">
+                            <form method="post" asp-controller="Cart" asp-action="Remove">
                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                 <button class="btn btn-sm btn-outline-danger">Remove</button>
                             </form>
@@ -55,7 +67,7 @@ else
         <h4 class="text-success fw-bold">@Model.Sum(x => x.Quantity * x.Price).ToString(PriceFormat)</h4>
     </div>
 
-    <form method="post" asp-page-handler="Checkout" class="mt-3 text-end">
+    <form method="post" asp-controller="Cart" asp-action="Checkout" class="mt-3 text-end">
         <button class="btn btn-primary btn-lg">Checkout</button>
     </form>
 }
