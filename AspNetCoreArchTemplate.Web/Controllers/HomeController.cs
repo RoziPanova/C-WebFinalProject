@@ -29,9 +29,8 @@ namespace AspNetCoreArchTemplate.Web.Controllers
         {
             switch (statusCode)
             {
-                case 401:
-                case 403:
-                    return this.View("UnauthorizedError");
+                case 500:
+                    return this.View("BadRequestError");
                 case 404:
                     return this.View("NotFoundError");
                 default:
