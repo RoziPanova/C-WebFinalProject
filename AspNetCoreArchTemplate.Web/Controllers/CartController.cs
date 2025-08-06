@@ -1,13 +1,8 @@
 ﻿namespace AspNetCoreArchTemplate.Web.Controllers
 {
-    using AspNetCoreArchTemplate.Data.Models;
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using AspNetCoreArchTemplate.Web.ViewModels.Cart;
-    using AspNetCoreArchTemplate.Web.ViewModels.Products;
-    using AspNetCoreGeneratedDocument;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.CodeAnalysis;
-    using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
     public class CartController : BaseController
     {

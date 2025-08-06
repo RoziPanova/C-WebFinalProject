@@ -1,0 +1,65 @@
+﻿@using AspNetCoreArchTemplate.Web.ViewModels.Admin.ProductManagement
+@model AddProductManagementViewModel
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<h2 class="mb-4">Add New Product</h2>
+
+<form asp-action="Add" method="post" class="card p-4 shadow-sm bg-light">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ProductType" class="form-label"></label>
+        <input asp-for="ProductType" class="form-control" />
+        <span asp-validation-for="ProductType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EventType" class="form-label"></label>
+        <input asp-for="EventType" class="form-control" />
+        <span asp-validation-for="EventType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageUrl" class="form-label"></label>
+        <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL (optional)" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label">Category</label>
+        <select asp-for="CategoryId" class="form-select">
+            <option value="">-- Select Category --</option>
+            @foreach (var category in Model.Categories)
+            {
+                <option value="@category.Id" selected="@(Model.CategoryId == category.Id)">
+                    @category.Name
+                </option>
+            }
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Product</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
