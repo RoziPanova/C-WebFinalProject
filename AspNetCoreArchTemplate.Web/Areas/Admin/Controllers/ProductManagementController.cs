@@ -1,15 +1,11 @@
-﻿using AspNetCoreArchTemplate.Services.Core;
-using AspNetCoreArchTemplate.Services.Core.Admin.Interfaces;
-using AspNetCoreArchTemplate.Services.Core.Interfaces;
-using AspNetCoreArchTemplate.Web.ViewModels.Admin.ProductManagement;
-using AspNetCoreArchTemplate.Web.ViewModels.Admin.Products;
-using AspNetCoreArchTemplate.Web.ViewModels.Products;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
-
-namespace AspNetCoreArchTemplate.Web.Areas.Admin.Controllers
+﻿namespace AspNetCoreArchTemplate.Web.Areas.Admin.Controllers
 {
+    using AspNetCoreArchTemplate.Services.Core.Admin.Interfaces;
+    using AspNetCoreArchTemplate.Web.ViewModels.Admin.ProductManagement;
+    using AspNetCoreArchTemplate.Web.ViewModels.Admin.Products;
+    using Microsoft.AspNetCore.Mvc;
+
+    [AutoValidateAntiforgeryToken]
     public class ProductManagementController : BaseAdminController
     {
         private readonly IProductManagementService productManagementService;
@@ -56,9 +52,10 @@ namespace AspNetCoreArchTemplate.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Edit(ProductManagementFormInputModel model)
         {
-           
+
             if (!ModelState.IsValid)
             {
                 // Re-populate categories if validation fails
@@ -78,27 +75,54 @@ namespace AspNetCoreArchTemplate.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var categories = await productManagementService
-                .GetAllCategoriesAsync();
+            var model = new AddProductManagementViewModel
+            {
+                Categories = await productManagementService.GetAllCategoriesAsync()
+            };
 
-
-
-            return View(categories);
+            return View(model);
         }
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Add(AddProductManagementViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Categories = (await productManagementService.GetAllCategoriesAsync());
+                model.Categories = await productManagementService.GetAllCategoriesAsync();
                 return View(model);
             }
 
-            await productManagementService.AddProductAsync(model);
-            TempData["SuccessMessage"] = "Product added successfully!";
-            return RedirectToAction("Index");
+            var success = await productManagementService.AddProductAsync(model);
+            if (!success)
+            {
+                ModelState.AddModelError("", "Failed to add product.");
+                model.Categories = await productManagementService.GetAllCategoriesAsync();
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest();
+            }
+
+            bool deleted = await productManagementService.DeleteAsync(id);
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }

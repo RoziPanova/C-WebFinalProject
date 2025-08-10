@@ -17,6 +17,10 @@
         public string ImageUrl { get; set; } = null!;
 
         public string? CategoryId { get; set; }
+        [Required]
+        public string ProductType { get; set; } = null!;
+        public string? EventType { get; set; }
+
         public IEnumerable<CategoryDropDownViewModel>? Categories { get; set; }
             = new List<CategoryDropDownViewModel>();
         [Required]

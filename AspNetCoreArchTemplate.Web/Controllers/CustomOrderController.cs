@@ -4,6 +4,7 @@
     using AspNetCoreArchTemplate.Web.ViewModels.CustomOrder;
     using Microsoft.AspNetCore.Mvc;
 
+    [AutoValidateAntiforgeryToken]
     public class CustomOrderController : BaseController
     {
         private readonly ICustomOrderService customOrderService;
@@ -18,6 +19,7 @@
         }
 
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Create(CustomOrderFormInputViewModel inputModel)
         {
             if (!ModelState.IsValid)

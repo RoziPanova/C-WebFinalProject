@@ -4,6 +4,7 @@
     using AspNetCoreArchTemplate.Web.ViewModels.Admin.UserManagement;
     using Microsoft.AspNetCore.Mvc;
 
+    [AutoValidateAntiforgeryToken]
     public class UserManagementController : BaseAdminController
     {
         private readonly IUserManagementService userManagementService;
@@ -22,6 +23,7 @@
             return View(allUsers);
         }
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> UpdateRole(RoleSelectionInputModel inputModel)
         {
             if (ModelState.IsValid)
@@ -46,6 +48,7 @@
             }
         }
         [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> DeleteUser(string userId)
         {
             try

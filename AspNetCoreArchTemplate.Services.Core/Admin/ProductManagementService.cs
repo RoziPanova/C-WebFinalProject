@@ -61,6 +61,8 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin
                     Description = product.Description,
                     ImageUrl = product.ImageUrl,
                     CategoryId = product.CategoryId.ToString(),
+                    ProductType = product.ProductType,
+                    EventType = product.EventType,
                     IsAvailable = product.IsDeleted
                 };
             }
@@ -78,27 +80,26 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin
             if (model.Id == null)
                 return false;
             var product = await productRepository
-                    .GetAllAttached()
-                    .AsNoTracking()
-                    .IgnoreQueryFilters()
-                    .SingleOrDefaultAsync(p => p.Id.ToString() == model.Id);
+                .GetAllAttached()
+                .IgnoreQueryFilters()
+                .SingleOrDefaultAsync(p => p.Id.ToString() == model.Id.ToLower());
+
             if (product == null)
                 return false;
 
+            // Map the new values
             product.Name = model.Name;
-            product.Price = model.Price;
             product.Description = model.Description;
+            product.Price = model.Price;
             product.ImageUrl = model.ImageUrl;
-            bool result = Guid.TryParse(model.CategoryId, out Guid categoryId);
-            if (result)
-            {
-                product.CategoryId = categoryId;
-            }
-            else
-            {
-                product.CategoryId = null;
-            }
+            product.ProductType = model.ProductType;
+            product.EventType = model.EventType;
+            product.CategoryId = string.IsNullOrEmpty(model.CategoryId)
+                ? null
+                : Guid.Parse(model.CategoryId);
             product.IsDeleted = model.IsAvailable;
+
+            await productRepository.UpdateAsync(product);
 
             await productRepository.SaveChangesAsync();
 
@@ -126,44 +127,45 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin
 
         public async Task<bool> AddProductAsync(AddProductManagementViewModel model)
         {
-            bool res = Guid.TryParse(model.CategoryId, out Guid categoryId);
-            Product? product = null;
-            if (res)
-            {
-                product = new Product()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = model.Name,
-                    Description = model.Description,
-                    Price = model.Price,
-                    ProductType = model.ProductType,
-                    EventType = model.EventType ?? null,
-                    ImageUrl = model.ImageUrl ?? $"{NoImageUrl}",
-                    CategoryId = categoryId,
-                    IsDeleted = false
-                };
 
-            }
-            else
+            var product = new Product
             {
-                product = new Product()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = model.Name,
-                    Description = model.Description,
-                    Price = model.Price,
-                    ProductType = model.ProductType,
-                    EventType = model.EventType ?? null,
-                    ImageUrl = model.ImageUrl ?? $"{NoImageUrl}",
-                    CategoryId = null,
-                    IsDeleted = false
-                };
-            }
+                Id = Guid.NewGuid(),
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl ?? $"{NoImageUrl}",
+                ProductType = model.ProductType,
+                EventType = model.EventType,
+                CategoryId = string.IsNullOrEmpty(model.CategoryId) ? null : Guid.Parse(model.CategoryId)
+            };
+
 
             await productRepository.AddAsync(product);
             await productRepository.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> DeleteAsync(string? productId)
+        {
+            if (productId == null)
+                return false;
+
+            var product = await productRepository
+                .GetAllAttached()
+                .IgnoreQueryFilters()
+                .SingleOrDefaultAsync(p => p.Id.ToString() == productId);
+
+            if (product == null)
+            {
+                return false;
+            }
+
+            await productRepository.HardDeleteAsync(product);
+
+            await productRepository.SaveChangesAsync();
+            return true;
+        }
+
 
         public async Task<IEnumerable<CategoryDropDownViewModel>> GetAllCategoriesAsync()
         {

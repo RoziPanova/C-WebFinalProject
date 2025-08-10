@@ -8,6 +8,7 @@ namespace AspNetCoreArchTemplate.Web
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using Infrastructure.Extensions;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
     public class Program
@@ -42,7 +43,8 @@ namespace AspNetCoreArchTemplate.Web
 
             builder.Services.AddTransient<IIdentitySeeder, IdentitySeeder>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options
+                => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
 
             WebApplication? app = builder.Build();

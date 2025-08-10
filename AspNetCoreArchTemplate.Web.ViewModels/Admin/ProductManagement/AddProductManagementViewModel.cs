@@ -9,10 +9,10 @@
 
         public string? Description { get; set; }
 
-        [Range(0.01, double.MaxValue)]
+        [Range(1.00, double.MaxValue, ErrorMessage = "Pricing is required")]
         public decimal Price { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Specifying product type is required")]
         public string ProductType { get; set; } = null!;
 
         public string? EventType { get; set; }
@@ -21,6 +21,7 @@
 
         public string? CategoryId { get; set; }
 
-        public IEnumerable<CategoryDropDownViewModel> Categories { get; set; } = null!;
+        public IEnumerable<CategoryDropDownViewModel>? Categories { get; set; }
+                = new List<CategoryDropDownViewModel>();
     }
 }

@@ -46,6 +46,16 @@
         </select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
+    <div class="mb-3">
+        <label asp-for="ProductType" class="form-label"></label>
+        <input asp-for="ProductType" class="form-control" />
+        <span asp-validation-for="ProductType" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="EventType" class="form-label"></label>
+        <input asp-for="EventType" class="form-control" />
+        <span asp-validation-for="EventType" class="text-danger"></span>
+    </div>
 
     <div class="form-check mb-3">
         <input asp-for="IsAvailable" class="form-check-input" />

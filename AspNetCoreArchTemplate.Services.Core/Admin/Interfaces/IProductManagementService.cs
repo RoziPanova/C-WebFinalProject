@@ -13,6 +13,7 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin.Interfaces
         public Task<bool> UpdateAsync(ProductManagementFormInputModel model);
         public Task<bool> HardDeleteAsync(string? productId);
         public Task<bool> AddProductAsync(AddProductManagementViewModel model);
+        public Task<bool> DeleteAsync(string? productId);
 
     }
 }
