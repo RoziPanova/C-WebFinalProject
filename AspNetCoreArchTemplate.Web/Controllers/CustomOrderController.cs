@@ -22,19 +22,22 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CustomOrderFormInputViewModel inputModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return this.View(inputModel);
-            }
+
             try
             {
-                await this.customOrderService.AddCustomOrderAsync(inputModel);
+                if (!ModelState.IsValid)
+                {
+                    return this.View(inputModel);
+                }
+                await this.customOrderService
+                    .AddCustomOrderAsync(inputModel);
                 //TODO: Add a page for viewing customr orders
                 return this.RedirectToAction(nameof(Create));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return this.RedirectToAction(nameof(Create));
+                Console.WriteLine(e);
+                return this.RedirectToAction("Index", "Home");
 
             }
         }

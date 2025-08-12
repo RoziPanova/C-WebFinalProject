@@ -30,7 +30,7 @@
                     CustomOrders = customOrders
                 };
 
-                return View(model);
+                return this.View(model);
             }
             catch (Exception e)
             {
@@ -52,7 +52,7 @@
                 if (!success)
                     return NotFound();
 
-                return this.RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index), "OrderManagement");
             }
             catch (Exception e)
             {
@@ -74,13 +74,36 @@
                 if (!success)
                     return NotFound();
 
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction(nameof(Index), "OrderManagement");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return this.RedirectToAction(nameof(Index), "Home");
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> OrderDetails(string id)
+        {
+            var orderDetails = await orderManagementService
+                .GetOrderDetailsAsync(id);
+
+            if (orderDetails == null)
+                return NotFound();
+
+            return this.View(orderDetails);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CustomOrderDetails(string id)
+        {
+            var customOrder = await orderManagementService
+                .GetCustomOrderDetailsAsync(id);
+
+            if (customOrder == null)
+                return NotFound();
+
+            return this.View(customOrder);
         }
 
     }

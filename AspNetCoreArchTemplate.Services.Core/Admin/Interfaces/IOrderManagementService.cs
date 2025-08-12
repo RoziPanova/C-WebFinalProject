@@ -8,6 +8,7 @@
         Task<IEnumerable<CustomOrderViewModel>> GetAllCustomOrdersAsync();
         Task<bool> DeleteOrderAsync(string id);
         Task<bool> DeleteCustomOrderAsync(string id);
-
+        Task<OrderDetailsViewModel?> GetOrderDetailsAsync(string id);
+        Task<CustomOrderViewModel?> GetCustomOrderDetailsAsync(string id);
     }
 }

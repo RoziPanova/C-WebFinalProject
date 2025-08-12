@@ -1,0 +1,13 @@
+﻿@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+@using AspNetCoreArchTemplate.Web.ViewModels.Admin.OrderManagement
+@model CustomOrderViewModel
+
+<h2>Custom Order Details</h2>
+<p><strong>Order ID:</strong> @Model.Id</p>
+<p><strong>Customer:</strong> @Model.CustomerName</p>
+<p><strong>Phone:</strong> @Model.CustomerPhoneNumber</p>
+<p><strong>Address:</strong> @Model.CustomerAddress</p>
+<p><strong>Needed By:</strong> @Model.CustomOrderNeededBy.ToString(AppDateFormat)</p>
+<p><strong>Details:</strong> @Model.CustomOrderDetails</p>
+
+<a asp-action="Index" class="btn btn-secondary">Back to Orders</a>

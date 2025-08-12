@@ -15,8 +15,9 @@
             this.customOrderRepository = customOrderRepository;
         }
 
-        public async Task AddCustomOrderAsync(CustomOrderFormInputViewModel inputModel)
+        public async Task<bool> AddCustomOrderAsync(CustomOrderFormInputViewModel inputModel)
         {
+            bool isCustomOrderCreated = false;
             CustomOrder newCustomOrder = new CustomOrder()
             {
                 UserName = inputModel.UserName,
@@ -30,6 +31,8 @@
 
             await this.customOrderRepository.AddAsync(newCustomOrder);
             await this.customOrderRepository.SaveChangesAsync();
+            isCustomOrderCreated = true;
+            return isCustomOrderCreated;
         }
     }
 }

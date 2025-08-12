@@ -4,6 +4,6 @@ namespace AspNetCoreArchTemplate.Services.Core.Interfaces
 {
     public interface ICustomOrderService
     {
-        public Task AddCustomOrderAsync(CustomOrderFormInputViewModel inputModel);
+        public Task<bool> AddCustomOrderAsync(CustomOrderFormInputViewModel inputModel);
     }
 }

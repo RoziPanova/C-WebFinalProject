@@ -1,0 +1,31 @@
+﻿@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+@using AspNetCoreArchTemplate.Web.ViewModels.Admin.OrderManagement
+@model OrderDetailsViewModel
+
+<h2>Order Details</h2>
+<p><strong>Order ID:</strong> @Model.Id</p>
+<p><strong>Customer:</strong> @Model.CustomerName</p>
+<p><strong>Total Amount:</strong> @Model.TotalAmount.ToString(PriceFormat)</p>
+
+<h4>Items</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price.ToString(PriceFormat)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Back to Orders</a>

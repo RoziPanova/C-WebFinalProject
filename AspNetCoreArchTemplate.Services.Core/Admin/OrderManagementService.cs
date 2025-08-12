@@ -110,5 +110,62 @@
             return isCustomOrderDeletedSuccessfully;
         }
 
+        public async Task<OrderDetailsViewModel?> GetOrderDetailsAsync(string id)
+        {
+            if (!Guid.TryParse(id, out Guid orderId))
+                return null;
+
+            var order = await cartRepository
+                .GetAllAttached()
+                .Include(c => c.User)
+                .Include(c => c.Items)
+                .ThenInclude(i => i.Product)
+                .AsNoTracking()
+                .IgnoreQueryFilters()
+                .SingleOrDefaultAsync(c => c.Id == orderId && c.IsCheckedOut);
+
+            if (order == null)
+                return null;
+
+            OrderDetailsViewModel orderDetailsModel= new OrderDetailsViewModel()
+            {
+                Id = order.Id.ToString(),
+                CustomerName = order.User.UserName!,
+                TotalAmount = order.Items.Sum(i => i.Quantity * i.Product.Price),
+                Items = order.Items.Select(i => new OrderItemViewModel
+                {
+                    ProductName = i.Product.Name,
+                    Quantity = i.Quantity,
+                    Price = i.Product.Price
+                }).ToList()
+            };
+
+            return orderDetailsModel;
+        }
+        public async Task<CustomOrderViewModel?> GetCustomOrderDetailsAsync(string id)
+        {
+            if (!Guid.TryParse(id, out Guid orderId))
+                return null;
+
+            var customOrder = await customOrderRepository
+                .GetAllAttached()
+                .AsNoTracking()
+                .SingleOrDefaultAsync(o => o.Id == orderId);
+
+            if (customOrder == null)
+                return null;
+
+            return new CustomOrderViewModel
+            {
+                Id = customOrder.Id.ToString(),
+                CustomerName = customOrder.UserName,
+                CustomerPhoneNumber = customOrder.PhoneNumber,
+                CustomerAddress = customOrder.Address,
+                CustomOrderNeededBy = customOrder.RequestedDate,
+                CustomOrderDetails = customOrder.Details
+            };
+        }
+
+
     }
 }
