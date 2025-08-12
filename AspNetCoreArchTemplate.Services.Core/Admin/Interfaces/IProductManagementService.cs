@@ -8,7 +8,7 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin.Interfaces
     public interface IProductManagementService
     {
         public Task<IEnumerable<ProductManagementIndexViewModel>> GetAllProductsAsync();
-        public Task<ProductManagementFormInputModel?> GetByIdAsync(string? productId);
+        public Task<ProductManagementFormInputModel?> GetProductByIdAsync(string? productId);
         public Task<IEnumerable<CategoryDropDownViewModel>> GetAllCategoriesAsync();
         public Task<bool> UpdateAsync(ProductManagementFormInputModel model);
         public Task<bool> HardDeleteAsync(string? productId);

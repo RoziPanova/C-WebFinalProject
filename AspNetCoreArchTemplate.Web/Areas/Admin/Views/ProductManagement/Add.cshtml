@@ -48,7 +48,7 @@
             }
         </select>
     </div>
-
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-success">Add Product</button>
     <a asp-controller="ProductManagement" asp-action="Index" asp-area="Admin" class="btn btn-secondary">Cancel</a>
 </form>

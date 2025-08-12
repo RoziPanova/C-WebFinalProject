@@ -17,7 +17,8 @@ namespace AspNetCoreArchTemplate.Web
         {
             WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
 
-            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services
                 .AddDbContext<ApplicationDbContext>(options =>

@@ -1,5 +1,4 @@
-﻿
-namespace AspNetCoreArchTemplate.Web.Areas.Admin.Controllers
+﻿namespace AspNetCoreArchTemplate.Web.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 

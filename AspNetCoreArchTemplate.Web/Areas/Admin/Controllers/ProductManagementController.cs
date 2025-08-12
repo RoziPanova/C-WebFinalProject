@@ -18,7 +18,7 @@
             IEnumerable<ProductManagementIndexViewModel> allProducts = await this.productManagementService
                 .GetAllProductsAsync();
 
-            return View(allProducts);
+            return this.View(allProducts);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(string? productId)
@@ -32,7 +32,7 @@
             {
                 var product = await
                     productManagementService
-                    .GetByIdAsync(productId);
+                    .GetProductByIdAsync(productId);
                 if (product == null)
                 {
                     return NotFound();
@@ -42,7 +42,7 @@
                 var categories = await productManagementService.GetAllCategoriesAsync();
                 product.Categories = categories;
 
-                return View(product);
+                return this.View(product);
             }
             catch (Exception)
             {
@@ -52,75 +52,111 @@
 
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ProductManagementFormInputModel model)
         {
-
-            if (!ModelState.IsValid)
+            try
             {
-                // Re-populate categories if validation fails
-                model.Categories = await productManagementService.GetAllCategoriesAsync();
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    // Re-populate categories if validation fails
+                    model.Categories = await productManagementService.GetAllCategoriesAsync();
+                    return this.View(model);
+                }
+
+                bool success = await productManagementService.UpdateAsync(model);
+                if (!success)
+                {
+                    return NotFound();
+                }
+
+                return this.RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return this.RedirectToAction(nameof(Index), "Home");
             }
 
-            bool success = await productManagementService.UpdateAsync(model);
-            if (!success)
-            {
-                return NotFound();
-            }
 
-            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var model = new AddProductManagementViewModel
+            try
             {
-                Categories = await productManagementService.GetAllCategoriesAsync()
-            };
+                var model = new AddProductManagementViewModel
+                {
+                    Categories = await productManagementService.GetAllCategoriesAsync()
+                };
 
-            return View(model);
+                return this.View(model);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return this.RedirectToAction(nameof(Index), "Home");
+            }
+
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddProductManagementViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                model.Categories = await productManagementService.GetAllCategoriesAsync();
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    model.Categories = await productManagementService.GetAllCategoriesAsync();
+                    return this.View(model);
+                }
+
+                var success = await productManagementService.AddProductAsync(model);
+                if (!success)
+                {
+                    ModelState.AddModelError("", "Failed to add product.");
+                    model.Categories = await productManagementService.GetAllCategoriesAsync();
+                    return this.View(model);
+                }
+
+                return this.RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return this.RedirectToAction(nameof(Index), "Home");
             }
 
-            var success = await productManagementService.AddProductAsync(model);
-            if (!success)
-            {
-                ModelState.AddModelError("", "Failed to add product.");
-                model.Categories = await productManagementService.GetAllCategoriesAsync();
-                return View(model);
-            }
-
-            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            try
             {
-                return BadRequest();
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    return BadRequest();
+                }
+
+                bool deleted = await productManagementService.DeleteAsync(id);
+
+                if (!deleted)
+                {
+                    return NotFound();
+                }
+
+                return this.RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return this.RedirectToAction(nameof(Index), "Home");
             }
 
-            bool deleted = await productManagementService.DeleteAsync(id);
-
-            if (!deleted)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction(nameof(Index));
         }
 
 

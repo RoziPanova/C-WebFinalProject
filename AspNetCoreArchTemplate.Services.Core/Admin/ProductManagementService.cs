@@ -39,10 +39,10 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin
 
             return products;
         }
-        public async Task<ProductManagementFormInputModel?> GetByIdAsync(string? productId)
+        public async Task<ProductManagementFormInputModel?> GetProductByIdAsync(string? productId)
         {
-            bool result = Guid.TryParse(productId, out var id);
-            if (result)
+            bool isIdValidGuid = Guid.TryParse(productId, out var id);
+            if (isIdValidGuid)
             {
                 var product = await productRepository
                     .GetAllAttached()
@@ -79,6 +79,7 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin
 
             if (model.Id == null)
                 return false;
+
             var product = await productRepository
                 .GetAllAttached()
                 .IgnoreQueryFilters()
@@ -107,8 +108,8 @@ namespace AspNetCoreArchTemplate.Services.Core.Admin
         }
         public async Task<bool> HardDeleteAsync(string? productId)
         {
-            bool res = Guid.TryParse(productId, out Guid prodId);
-            if (res)
+            bool isIdValidGuid = Guid.TryParse(productId, out Guid prodId);
+            if (isIdValidGuid)
             {
                 var product = await this.productRepository
                                 .SingleOrDefaultAsync(p => p.Id == prodId);

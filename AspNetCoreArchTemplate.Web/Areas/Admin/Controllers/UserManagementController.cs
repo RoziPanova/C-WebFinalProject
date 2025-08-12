@@ -23,7 +23,7 @@
             return View(allUsers);
         }
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateRole(RoleSelectionInputModel inputModel)
         {
             if (ModelState.IsValid)
@@ -48,7 +48,7 @@
             }
         }
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteUser(string userId)
         {
             try

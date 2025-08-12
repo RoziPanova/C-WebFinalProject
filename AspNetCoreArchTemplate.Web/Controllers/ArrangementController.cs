@@ -1,10 +1,9 @@
 ﻿namespace AspNetCoreArchTemplate.Web.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using AspNetCoreArchTemplate.Web.ViewModels.Products;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
 
 
     public class ArrangementController : BaseController

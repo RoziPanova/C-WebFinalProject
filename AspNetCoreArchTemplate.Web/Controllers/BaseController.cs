@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public abstract class BaseController : Controller
     {
         protected bool IsUserAuthenticated()

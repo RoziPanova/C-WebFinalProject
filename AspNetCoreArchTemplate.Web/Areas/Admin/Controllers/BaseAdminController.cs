@@ -8,6 +8,7 @@
 
     [Area(AdminRoleName)]
     [Authorize(Roles = AdminRoleName)]
+    [AutoValidateAntiforgeryToken]
     public abstract class BaseAdminController : Controller
     {
         private bool IsUserAuthenticated()

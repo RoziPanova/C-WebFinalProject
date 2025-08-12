@@ -3,7 +3,7 @@
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using AspNetCoreArchTemplate.Web.ViewModels.Cart;
     using Microsoft.AspNetCore.Mvc;
-
+    [AutoValidateAntiforgeryToken]
     public class CartController : BaseController
     {
         private readonly ICartItemsService cartItemsService;
@@ -34,6 +34,7 @@
             }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(string? productId)
         {
             try
@@ -66,6 +67,7 @@
             }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove(string? productId)
         {
             try
@@ -91,6 +93,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout()
         {
             try
@@ -115,6 +118,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> IncreaseQuantity(string productId)
         {
             try
@@ -136,6 +140,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DecreaseQuantity(string productId)
         {
             try

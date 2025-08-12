@@ -19,7 +19,7 @@
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CustomOrderFormInputViewModel inputModel)
         {
             if (!ModelState.IsValid)

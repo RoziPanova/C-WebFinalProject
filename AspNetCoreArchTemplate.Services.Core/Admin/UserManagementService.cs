@@ -68,18 +68,18 @@
 
         public async Task<bool> DeleteUserById(string userId)
         {
-            bool result = false;
+            bool isUserDeleted = false;
             if (!String.IsNullOrEmpty(userId))
             {
                 var user = await this.userManager.FindByIdAsync(userId);
                 if (user != null)
                 {
                     await this.userManager.DeleteAsync(user);
-                    result = true;
+                    isUserDeleted = true;
                 }
-                return result;
+                return isUserDeleted;
             }
-            return result;
+            return isUserDeleted;
         }
     }
 }

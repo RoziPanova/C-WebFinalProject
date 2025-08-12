@@ -29,6 +29,7 @@
             };
 
             await this.customOrderRepository.AddAsync(newCustomOrder);
+            await this.customOrderRepository.SaveChangesAsync();
         }
     }
 }

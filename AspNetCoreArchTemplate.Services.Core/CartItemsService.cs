@@ -35,14 +35,15 @@
                     ProductType = ci.Product.ProductType,
                     ProductImageUrl = ci.Product.ImageUrl ?? $"{NoImageUrl}",
                     Quantity = ci.Quantity,
-                    Price = ci.Product.Price
+                    Price = ci.Product.Price,
+                    Total = ci.Product.Price * ci.Quantity,
                 }).ToArrayAsync();
 
             return carItems;
         }
         public async Task<bool> AddProductToCartAsync(string? productId, string userId)
         {
-            bool result = false;
+            bool isProductAddedToCart = false;
             if (productId != null && userId != null)
             {
                 bool isProductIdValid = Guid.TryParse(productId, out Guid productGuid);
@@ -71,7 +72,7 @@
                     if (existingItem != null)
                     {
                         existingItem.Quantity++;
-                        result = true;
+                        isProductAddedToCart = true;
                     }
                     else
                     {
@@ -83,22 +84,22 @@
                         };
 
                         cart.Items.Add(cartItem);
-                        result = true;
+                        isProductAddedToCart = true;
                     }
                     await cartRepository.SaveChangesAsync();
                 }
             }
 
-            return result;
+            return isProductAddedToCart;
         }
 
         public async Task<bool> RemoveProductFromCartAsync(string? productId, string userId)
         {
-            bool result = false;
+            bool isProductRemovedFromCart = false;
             if (!Guid.TryParse(productId, out Guid productGuid)
                 || string.IsNullOrEmpty(userId))
             {
-                return result;
+                return isProductRemovedFromCart;
             }
 
             var cart = await cartRepository
@@ -108,7 +109,7 @@
 
             if (cart == null)
             {
-                return result;
+                return isProductRemovedFromCart;
             }
 
             // Find the item to remove
@@ -116,21 +117,21 @@
 
             if (itemToRemove == null)
             {
-                return result;
+                return isProductRemovedFromCart;
             }
             cart.Items.Remove(itemToRemove);
             await cartItemsRepository.HardDeleteAsync(itemToRemove);
-            result = true;
+            isProductRemovedFromCart = true;
             await cartItemsRepository.SaveChangesAsync();
 
-            return result;
+            return isProductRemovedFromCart;
         }
         public async Task<bool> CheckoutAsync(string userId)
         {
-            bool result = false;
+            bool isCartCheckedOut = false;
             if (string.IsNullOrEmpty(userId))
             {
-                return result;
+                return isCartCheckedOut;
             }
             var cart = await cartRepository
                 .GetAllAttached()
@@ -139,15 +140,15 @@
 
             if (cart == null)
             {
-                return result;
+                return isCartCheckedOut;
             }
 
             cart.IsCheckedOut = true;
-            result = true;
+            isCartCheckedOut = true;
 
             await cartRepository.SaveChangesAsync();
 
-            return result;
+            return isCartCheckedOut;
         }
 
         public async Task IncreaseQuantityAsync(string? productId, string userId)
@@ -169,7 +170,8 @@
 
         public async Task DecreaseQuantityAsync(string? productId, string userId)
         {
-            if (!Guid.TryParse(productId, out Guid productGuid)) return;
+            if (!Guid.TryParse(productId, out Guid productGuid))
+                return;
 
             var cart = await cartRepository
                 .GetAllAttached()

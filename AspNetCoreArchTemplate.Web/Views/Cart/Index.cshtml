@@ -37,6 +37,7 @@ else
                         <td>@item.ProductType</td>
                         <td>
                             <form asp-controller="Cart" asp-action="DecreaseQuantity" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                 <button class="btn btn-sm btn-outline-secondary">-</button>
                             </form>
@@ -44,14 +45,16 @@ else
                             <span class="mx-2">@item.Quantity</span>
 
                             <form asp-controller="Cart" asp-action="IncreaseQuantity" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                 <button class="btn btn-sm btn-outline-secondary">+</button>
                             </form>
                         </td>
                         <td>@item.Price.ToString(PriceFormat)</td>
-                        <td>@String.Format(PriceFormat, (item.Quantity * item.Price))</td>
+                        <td>@item.Total.ToString(PriceFormat)</td>
                         <td>
                             <form method="post" asp-controller="Cart" asp-action="Remove">
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                 <button class="btn btn-sm btn-outline-danger">Remove</button>
                             </form>
@@ -68,6 +71,7 @@ else
     </div>
 
     <form method="post" asp-controller="Cart" asp-action="Checkout" class="mt-3 text-end">
+        @Html.AntiForgeryToken()
         <button class="btn btn-primary btn-lg">Checkout</button>
     </form>
 }
