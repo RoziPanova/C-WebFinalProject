@@ -39,7 +39,6 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CustomOrderFormInputViewModel inputModel)
         {
-
             try
             {
                 if (!ModelState.IsValid)
@@ -58,11 +57,32 @@
             }
         }
         [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            try
+            {
+                CustomOrderDetailsViewModel? customOrder = await customOrderService
+                               .GetCustomOrderDetailsAsync(id);
+
+                if (customOrder == null)
+                    return NotFound();
+
+                return this.View(customOrder);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
             try
             {
-                var model = await customOrderService
+                CustomOrderFormInputViewModel? model = await customOrderService
                                 .GetCustomOrderForEditAsync(id);
 
                 if (model == null)
@@ -87,10 +107,10 @@
                 if (!ModelState.IsValid)
                     return View("Create", model);
 
-                var success = await customOrderService
+                bool isUpdated = await customOrderService
                     .UpdateCustomOrderAsync(id, model);
 
-                if (!success)
+                if (!isUpdated)
                 {
                     TempData["ErrorMessage"] = "Orders can only be edited at least 3 days before the needed-by date.";
                     return RedirectToAction(nameof(Index));
@@ -104,6 +124,22 @@
                 Console.WriteLine(e);
                 return this.RedirectToAction(nameof(Index), "Home");
             }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool isDeleted = await customOrderService
+                .DeleteCustomOrderAsync(id);
+
+            if (!isDeleted)
+            {
+                TempData["ErrorMessage"] = "Custom Orders can only be edited at least 3 days before the needed-by date.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            TempData["SuccessMessage"] = "Custom Order deleted successfully.";
+            return RedirectToAction(nameof(Index));
         }
 
     }

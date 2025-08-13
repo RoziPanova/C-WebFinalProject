@@ -12,7 +12,7 @@
         <i class="bi bi-plus-circle"></i> Add Custom Order
     </a>
 </div>
-<h5 class="text-danger">Orders can only be edited at least 3 days before the needed-by date.</h5>
+<h5 class="text-danger">Orders can only be edited and canceled at least 3 days before the needed-by date.</h5>
 @if (!Model.Any())
 {
     <div class="alert alert-info">
@@ -38,8 +38,6 @@ else
             <tr>
                 <th>Needed By</th>
                 <th>Details</th>
-                <th>Address</th>
-                <th>Phone</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -47,10 +45,8 @@ else
             @foreach (var order in Model)
             {
                 <tr>
-                    <td>@order.CustomOrderNeededBy.ToString("dd-MM-yyyy")</td>
-                    <td>@order.CustomOrderDetails</td>
-                    <td>@order.CustomerAddress</td>
-                    <td>@order.CustomerPhoneNumber</td>
+                    <td>@order.RequestedDate.ToString("dd.MM.yyyy")</td>
+                    <td>@order.Details</td>
                     <td>
                         <a asp-controller="CustomOrder"
                            asp-action="Details"
@@ -59,7 +55,7 @@ else
                             <i class="bi bi-eye"></i> View
                         </a>
 
-                        @if (order.CustomOrderNeededBy > DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
+                        @if (order.RequestedDate > DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
                         {
                             <a asp-controller="CustomOrder"
                                asp-action="Edit"
@@ -67,19 +63,20 @@ else
                                class="btn btn-sm btn-warning">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                        }
 
-                        <form asp-controller="CustomOrder"
-                              asp-action="Delete"
-                              asp-route-id="@order.Id"
-                              method="post"
-                              class="d-inline"
-                              onsubmit="return confirm('Are you sure you want to cancel this order?');">
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="bi bi-x-circle"></i> Cancel
-                            </button>
-                        </form>
+
+                            <form asp-controller="CustomOrder"
+                                  asp-action="Delete"
+                                  asp-route-id="@order.Id"
+                                  method="post"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Are you sure you want to cancel this order?');">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-x-circle"></i> Cancel Order
+                                </button>
+                            </form>
+                        }
                     </td>
                 </tr>
             }

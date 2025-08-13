@@ -24,11 +24,8 @@
                 .Select(co => new CustomOrderListViewModel
                 {
                     Id = co.Id.ToString(),
-                    CustomerName = co.UserName,
-                    CustomerPhoneNumber = co.PhoneNumber,
-                    CustomerAddress = co.Address,
-                    CustomOrderNeededBy = co.RequestedDate,
-                    CustomOrderDetails = co.Details,
+                    RequestedDate = co.RequestedDate,
+                    Details = co.Details,
                 })
                 .ToListAsync();
             return customOrders;
@@ -60,23 +57,23 @@
             if (!Guid.TryParse(customOrderId, out Guid customOrderIdGuid))
                 return null;
 
-            var order = await customOrderRepository
+            var customOrder = await customOrderRepository
                 .GetAllAttached()
                 .SingleOrDefaultAsync(o => o.Id == customOrderIdGuid);
 
-            if (order == null)
+            if (customOrder == null)
                 return null;
 
-            CustomOrderFormInputViewModel customOrder =
+            CustomOrderFormInputViewModel customOrderModel =
                 new CustomOrderFormInputViewModel()
                 {
-                    UserName = order.UserName,
-                    PhoneNumber = order.PhoneNumber,
-                    Address = order.Address,
-                    RequestedDate = order.RequestedDate.ToString(AppDateFormat),
-                    Details = order.Details
+                    UserName = customOrder.UserName,
+                    PhoneNumber = customOrder.PhoneNumber,
+                    Address = customOrder.Address,
+                    RequestedDate = customOrder.RequestedDate.ToString(AppDateFormat),
+                    Details = customOrder.Details
                 };
-            return customOrder;
+            return customOrderModel;
         }
 
         public async Task<bool> UpdateCustomOrderAsync(string customOrderId, CustomOrderFormInputViewModel model)
@@ -85,30 +82,80 @@
             if (!Guid.TryParse(customOrderId, out Guid customOrderIdGuid))
                 return isCustomOrderUpdated;
 
-            var order = await customOrderRepository
+            var customOrder = await customOrderRepository
                 .GetAllAttached()
                 .SingleOrDefaultAsync(o => o.Id == customOrderIdGuid);
 
-            if (order == null)
+            if (customOrder == null)
                 return isCustomOrderUpdated;
 
             // Check if the needed-by date is too close
-            if (order.RequestedDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
+            if (customOrder.RequestedDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
             {
                 // reject update
                 return isCustomOrderUpdated;
             }
 
-            order.UserName = model.UserName;
-            order.PhoneNumber = model.PhoneNumber;
-            order.Address = model.Address;
-            order.RequestedDate = DateOnly.ParseExact(model.RequestedDate, AppDateFormat);
-            order.Details = model.Details;
+            customOrder.UserName = model.UserName;
+            customOrder.PhoneNumber = model.PhoneNumber;
+            customOrder.Address = model.Address;
+            customOrder.RequestedDate = DateOnly.ParseExact(model.RequestedDate, AppDateFormat);
+            customOrder.Details = model.Details;
 
-            await customOrderRepository.UpdateAsync(order);
+            await customOrderRepository.UpdateAsync(customOrder);
             await customOrderRepository.SaveChangesAsync();
             isCustomOrderUpdated = true;
             return isCustomOrderUpdated;
+        }
+        public async Task<CustomOrderDetailsViewModel?> GetCustomOrderDetailsAsync(string customOrderId)
+        {
+            if (!Guid.TryParse(customOrderId, out Guid customOrderIdGuid))
+                return null;
+
+            var customOrder = await customOrderRepository
+                .GetAllAttached()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o => o.Id == customOrderIdGuid);
+
+            if (customOrder == null)
+                return null;
+
+            CustomOrderDetailsViewModel viewModel =
+                new CustomOrderDetailsViewModel()
+                {
+                    UserName = customOrder.UserName,
+                    PhoneNumber = customOrder.PhoneNumber,
+                    Address = customOrder.Address,
+                    RequestedDate = customOrder.RequestedDate,
+                    Details = customOrder.Details,
+                };
+
+            return viewModel;
+        }
+        public async Task<bool> DeleteCustomOrderAsync(string customOrderId)
+        {
+            bool isCustomOrderDeleted = false;
+            if (!Guid.TryParse(customOrderId, out Guid customOrderIdGuid))
+                return isCustomOrderDeleted;
+
+            var customOrder = await customOrderRepository
+                .GetAllAttached()
+                .SingleOrDefaultAsync(o => o.Id == customOrderIdGuid);
+
+            if (customOrder == null)
+                return isCustomOrderDeleted;
+
+            if (customOrder.RequestedDate <= DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
+            {
+                return isCustomOrderDeleted;
+            }
+
+
+            await customOrderRepository.HardDeleteAsync(customOrder);
+            await customOrderRepository.SaveChangesAsync();
+
+            isCustomOrderDeleted = true;
+            return isCustomOrderDeleted;
         }
 
     }

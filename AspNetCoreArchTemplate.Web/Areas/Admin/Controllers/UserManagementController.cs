@@ -30,8 +30,12 @@
             {
                 try
                 {
-                    await this.userManagementService
+                    bool isUpdated = await this.userManagementService
                         .AssignUserToRoleAsync(inputModel);
+                    if (!isUpdated)
+                    {
+                        return this.NotFound();
+                    }
 
                     return this.RedirectToAction(nameof(Index));
                 }
@@ -53,9 +57,12 @@
         {
             try
             {
-                await this.userManagementService
+                bool isDeleted = await this.userManagementService
                     .DeleteUserById(userId);
-
+                if (!isDeleted)
+                {
+                    return this.NotFound();
+                }
 
                 return this.RedirectToAction(nameof(Index));
             }

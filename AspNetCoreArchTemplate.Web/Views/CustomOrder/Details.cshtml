@@ -1,0 +1,35 @@
+﻿@model AspNetCoreArchTemplate.Web.ViewModels.CustomOrder.CustomOrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "Custom Order Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card mb-4">
+    <div class="card-header">
+        Customer Information
+    </div>
+    <div class="card-body">
+        <p><strong>Name:</strong> @Model.UserName</p>
+        <p><strong>Phone:</strong> @Model.PhoneNumber</p>
+        <p><strong>Address:</strong> @Model.Address</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        Order Information
+    </div>
+    <div class="card-body">@*
+        Can use it for future implementation of a tracking order funtion
+        <p><strong>Order ID:</strong> @Model.Id</p> *@
+        <p><strong>Needed By:</strong> @Model.RequestedDate.ToString("dd.MM.yyyy")</p>
+        <p><strong>Details:</strong> @Model.Details</p>
+    </div>
+</div>
+
+
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Back to Custom Orders</a>
+</div>

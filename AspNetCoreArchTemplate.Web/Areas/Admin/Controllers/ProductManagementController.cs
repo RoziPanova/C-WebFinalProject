@@ -30,7 +30,7 @@
 
             try
             {
-                var product = await
+                ProductManagementFormInputModel? product = await
                     productManagementService
                     .GetProductByIdAsync(productId);
                 if (product == null)
@@ -39,7 +39,7 @@
                 }
 
                 // Populate dropdown categories
-                var categories = await productManagementService.GetAllCategoriesAsync();
+                IEnumerable<CategoryDropDownViewModel> categories = await productManagementService.GetAllCategoriesAsync();
                 product.Categories = categories;
 
                 return this.View(product);
@@ -64,8 +64,8 @@
                     return this.View(model);
                 }
 
-                bool success = await productManagementService.UpdateAsync(model);
-                if (!success)
+                bool isEdited = await productManagementService.UpdateAsync(model);
+                if (!isEdited)
                 {
                     return NotFound();
                 }
@@ -86,7 +86,7 @@
         {
             try
             {
-                var model = new AddProductManagementViewModel
+                AddProductManagementViewModel model = new AddProductManagementViewModel
                 {
                     Categories = await productManagementService.GetAllCategoriesAsync()
                 };
@@ -113,8 +113,8 @@
                     return this.View(model);
                 }
 
-                var success = await productManagementService.AddProductAsync(model);
-                if (!success)
+                bool isAdded = await productManagementService.AddProductAsync(model);
+                if (!isAdded)
                 {
                     ModelState.AddModelError("", "Failed to add product.");
                     model.Categories = await productManagementService.GetAllCategoriesAsync();
@@ -142,9 +142,9 @@
                     return BadRequest();
                 }
 
-                bool deleted = await productManagementService.DeleteAsync(id);
+                bool isDeleted = await productManagementService.DeleteAsync(id);
 
-                if (!deleted)
+                if (!isDeleted)
                 {
                     return NotFound();
                 }

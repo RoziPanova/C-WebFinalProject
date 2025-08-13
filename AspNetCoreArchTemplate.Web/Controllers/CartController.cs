@@ -45,7 +45,7 @@
                     return this.Forbid();
                 }
 
-                var result = await this.cartItemsService
+                bool result = await this.cartItemsService
                     .AddProductToCartAsync(productId, userId);
                 if (result)
                 {

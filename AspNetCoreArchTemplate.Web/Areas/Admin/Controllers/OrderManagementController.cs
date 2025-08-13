@@ -19,12 +19,12 @@
         {
             try
             {
-                var orders = await orderManagementService
+                IEnumerable<OrderViewModel> orders = await orderManagementService
                     .GetAllOrdersAsync();
-                var customOrders = await orderManagementService
+                IEnumerable<CustomOrderViewModel> customOrders = await orderManagementService
                     .GetAllCustomOrdersAsync();
 
-                var model = new OrderManagementViewModel
+                OrderManagementViewModel model = new OrderManagementViewModel
                 {
                     Orders = orders,
                     CustomOrders = customOrders
@@ -85,7 +85,7 @@
         [HttpGet]
         public async Task<IActionResult> OrderDetails(string id)
         {
-            var orderDetails = await orderManagementService
+            OrderDetailsViewModel? orderDetails = await orderManagementService
                 .GetOrderDetailsAsync(id);
 
             if (orderDetails == null)
@@ -97,7 +97,7 @@
         [HttpGet]
         public async Task<IActionResult> CustomOrderDetails(string id)
         {
-            var customOrder = await orderManagementService
+            CustomOrderViewModel? customOrder = await orderManagementService
                 .GetCustomOrderDetailsAsync(id);
 
             if (customOrder == null)
