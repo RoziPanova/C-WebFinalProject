@@ -1,0 +1,88 @@
+﻿@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+@using AspNetCoreArchTemplate.Web.ViewModels.CustomOrder
+@model IEnumerable<CustomOrderListViewModel>
+
+@{
+    ViewData["Title"] = "My Custom Orders";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Custom Orders</h2>
+    <a asp-controller="CustomOrder" asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Add Custom Order
+    </a>
+</div>
+<h5 class="text-danger">Orders can only be edited at least 3 days before the needed-by date.</h5>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You have not submitted any custom orders yet.
+    </div>
+}
+else
+{
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Needed By</th>
+                <th>Details</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.CustomOrderNeededBy.ToString("dd-MM-yyyy")</td>
+                    <td>@order.CustomOrderDetails</td>
+                    <td>@order.CustomerAddress</td>
+                    <td>@order.CustomerPhoneNumber</td>
+                    <td>
+                        <a asp-controller="CustomOrder"
+                           asp-action="Details"
+                           asp-route-id="@order.Id"
+                           class="btn btn-sm btn-info">
+                            <i class="bi bi-eye"></i> View
+                        </a>
+
+                        @if (order.CustomOrderNeededBy > DateOnly.FromDateTime(DateTime.UtcNow.AddDays(3)))
+                        {
+                            <a asp-controller="CustomOrder"
+                               asp-action="Edit"
+                               asp-route-id="@order.Id"
+                               class="btn btn-sm btn-warning">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                        }
+
+                        <form asp-controller="CustomOrder"
+                              asp-action="Delete"
+                              asp-route-id="@order.Id"
+                              method="post"
+                              class="d-inline"
+                              onsubmit="return confirm('Are you sure you want to cancel this order?');">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

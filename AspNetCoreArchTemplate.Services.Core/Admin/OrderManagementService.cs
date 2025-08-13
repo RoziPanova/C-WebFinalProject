@@ -127,7 +127,7 @@
             if (order == null)
                 return null;
 
-            OrderDetailsViewModel orderDetailsModel= new OrderDetailsViewModel()
+            OrderDetailsViewModel orderDetailsModel = new OrderDetailsViewModel()
             {
                 Id = order.Id.ToString(),
                 CustomerName = order.User.UserName!,

@@ -9,6 +9,8 @@
     {
         [Comment("CustomOrder identifier")]
         public Guid Id { get; set; }
+        [Comment("Customer identifier")]
+        public string UserId { get; set; } = null!;
 
         [Comment("Customer name")]
         public string UserName { get; set; } = null!;
