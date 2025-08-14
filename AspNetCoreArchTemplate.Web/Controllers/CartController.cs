@@ -25,7 +25,7 @@
                 }
 
                 IEnumerable<CartIndexViewModel> userCart = await this.cartItemsService
-                    .GetAllCartItemsAysnc(userId);
+                    .GetAllCartItemsAsync(userId);
                 var pageSize = 8;
                 return View(await PaginatedList<CartIndexViewModel>
                     .CreatePaginationAsync(userCart, pageNumber ?? 1, pageSize));
