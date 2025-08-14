@@ -1,19 +1,35 @@
 ﻿@using AspNetCoreArchTemplate.Web.ViewModels.Products
-@model IEnumerable<ProductIndexViewModel>
+@using AspNetCoreArchTemplate.Services.Core
+@model PaginatedList<ProductIndexViewModel>
 @{
     ViewData["Title"] = "Bouquets Page";
 }
 
 <h2 class="text-center my-4">Our Bouquets</h2>
+@{
+    var bouquets = Model.Where(p => p.ProductType == "Bouquet").ToList();
+}
 
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-        @foreach (ProductIndexViewModel bouquet in Model)
+        @foreach (var bouquet in bouquets)
         {
-            @if (bouquet.ProductType == "Bouquet")
-            {
-                <partial name="_ProductCardPartial" model="bouquet"></partial>
-            }
+            <partial name="_ProductCardPartial" model="bouquet"></partial>
         }
     </div>
 </div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

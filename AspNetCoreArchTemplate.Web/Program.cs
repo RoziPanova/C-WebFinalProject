@@ -5,6 +5,7 @@ namespace AspNetCoreArchTemplate.Web
     using AspNetCoreArchTemplate.Data.Repository.Interfaces;
     using AspNetCoreArchTemplate.Data.Seeding;
     using AspNetCoreArchTemplate.Data.Seeding.Interfaces;
+    using AspNetCoreArchTemplate.Services.Core;
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using Infrastructure.Extensions;
     using Microsoft.AspNetCore.Identity;
@@ -38,6 +39,8 @@ namespace AspNetCoreArchTemplate.Web
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //builder.Services.AddScoped(typeof(IPaginationService<>), typeof(PaginationService<>));
 
             builder.Services.AddRepositories(typeof(IProductRepository).Assembly);
             builder.Services.AddUserDefinedServices(typeof(IProductService).Assembly);

@@ -1,5 +1,6 @@
 ﻿namespace AspNetCoreArchTemplate.Web.Controllers
 {
+    using AspNetCoreArchTemplate.Services.Core;
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using AspNetCoreArchTemplate.Web.ViewModels.Products;
     using Microsoft.AspNetCore.Authorization;
@@ -17,12 +18,14 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             IEnumerable<ProductIndexViewModel> allArrangements = await this.productService
                 .GetAllProductsAsync();
 
-            return View(allArrangements);
+            var pageSize = 9;
+            return View(await PaginatedList<ProductIndexViewModel>
+                .CreatePaginationAsync(allArrangements, pageNumber ?? 1, pageSize));
         }
         [HttpGet]
         [AllowAnonymous]

@@ -1,0 +1,34 @@
+﻿@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+@using AspNetCoreArchTemplate.Web.ViewModels.Search
+@model SearchResultsViewModel
+
+<h2>Search Results for "@Model.Query"</h2>
+
+@if (!Model.Products.Any() && !Model.CustomOrders.Any())
+{
+    <p>No results found.</p>
+}
+
+@if (Model.Products.Any())
+{
+    <div class="container">
+        <h3>Products</h3>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            @foreach (var p in Model.Products)
+            {
+                <partial name="_ProductCardPartial" model="p"></partial>
+            }
+        </div>
+    </div>
+}
+
+@if (Model.CustomOrders.Any())
+{
+    <h3>Custom Orders</h3>
+    <ul>
+        @foreach (var o in Model.CustomOrders)
+        {
+            <li>@o.Details - Needed By: @o.RequestedDate.ToString("dd.MM.yyyy")</li>
+        }
+    </ul>
+}

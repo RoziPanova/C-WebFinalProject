@@ -52,8 +52,17 @@
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
-                                <i class="bi bi-cart-fill"></i> Cart
+                                <i class="bi bi-cart-fill"></i> Cart  
                             </a>
+                        </li>
+                        <li>
+                            <form asp-controller="Search" asp-action="Index" method="get" class="d-flex ms-auto" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search..." name="query" value="@Context.Request.Query["query"]">
+                                <button class="btn btn-outline-primary" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

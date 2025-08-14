@@ -1,5 +1,8 @@
-﻿@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
-@model IEnumerable<AspNetCoreArchTemplate.Web.ViewModels.Admin.Products.ProductManagementIndexViewModel>
+﻿@using AspNetCoreArchTemplate.Web.ViewModels.Admin.Products
+@using AspNetCoreArchTemplate.Services.Core
+@using static AspNetCoreArchTemplate.GCommon.ApplicationConstants
+
+@model PaginatedList<ProductManagementIndexViewModel>
 
 @{
     ViewData["Title"] = "Manage Products";
@@ -33,6 +36,20 @@
                 <th>Actions</th>
             </tr>
         </thead>
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <a asp-action="Index"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>
+        <a asp-action="Index"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           class="btn btn-default @nextDisabled">
+            Next
+        </a>
         <tbody>
             @foreach (var product in Model)
             {

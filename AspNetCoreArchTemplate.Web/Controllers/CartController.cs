@@ -1,7 +1,9 @@
 ﻿namespace AspNetCoreArchTemplate.Web.Controllers
 {
+    using AspNetCoreArchTemplate.Services.Core;
     using AspNetCoreArchTemplate.Services.Core.Interfaces;
     using AspNetCoreArchTemplate.Web.ViewModels.Cart;
+    using AspNetCoreArchTemplate.Web.ViewModels.Products;
     using Microsoft.AspNetCore.Mvc;
     [AutoValidateAntiforgeryToken]
     public class CartController : BaseController
@@ -12,7 +14,7 @@
             this.cartItemsService = cartItemsService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             try
             {
@@ -24,7 +26,10 @@
 
                 IEnumerable<CartIndexViewModel> userCart = await this.cartItemsService
                     .GetAllCartItemsAysnc(userId);
-                return View(userCart);
+                var pageSize = 8;
+                return View(await PaginatedList<CartIndexViewModel>
+                    .CreatePaginationAsync(userCart, pageNumber ?? 1, pageSize));
+
             }
             catch (Exception e)
             {

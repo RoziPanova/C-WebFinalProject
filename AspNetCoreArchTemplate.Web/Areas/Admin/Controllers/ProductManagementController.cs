@@ -1,8 +1,10 @@
 ﻿namespace AspNetCoreArchTemplate.Web.Areas.Admin.Controllers
 {
+    using AspNetCoreArchTemplate.Services.Core;
     using AspNetCoreArchTemplate.Services.Core.Admin.Interfaces;
     using AspNetCoreArchTemplate.Web.ViewModels.Admin.ProductManagement;
     using AspNetCoreArchTemplate.Web.ViewModels.Admin.Products;
+    using AspNetCoreArchTemplate.Web.ViewModels.Products;
     using Microsoft.AspNetCore.Mvc;
 
     [AutoValidateAntiforgeryToken]
@@ -13,12 +15,15 @@
         {
             this.productManagementService = productManagementService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             IEnumerable<ProductManagementIndexViewModel> allProducts = await this.productManagementService
                 .GetAllProductsAsync();
 
-            return this.View(allProducts);
+            var pageSize = 8;
+            return View(await PaginatedList<ProductManagementIndexViewModel>
+                .CreatePaginationAsync(allProducts, pageNumber ?? 1, pageSize));
+
         }
         [HttpGet]
         public async Task<IActionResult> Edit(string? productId)
