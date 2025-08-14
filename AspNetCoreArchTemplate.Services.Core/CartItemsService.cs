@@ -21,7 +21,7 @@
 
 
 
-        public async Task<IEnumerable<CartIndexViewModel>> GetAllCartItemsAysnc(string userId)
+        public async Task<IEnumerable<CartIndexViewModel>> GetAllCartItemsAsync(string userId)
         {
             IEnumerable<CartIndexViewModel> carItems = await this.cartItemsRepository
                 .GetAllAttached()
@@ -44,7 +44,11 @@
         public async Task<bool> AddProductToCartAsync(string? productId, string userId)
         {
             bool isProductAddedToCart = false;
-            if (productId != null && userId != null)
+            if (string.IsNullOrEmpty(productId) || string.IsNullOrEmpty(userId))
+            {
+                return isProductAddedToCart;
+            }
+            else
             {
                 bool isProductIdValid = Guid.TryParse(productId, out Guid productGuid);
                 if (isProductIdValid)
